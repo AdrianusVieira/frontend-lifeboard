@@ -44,3 +44,17 @@ export const AuxiliarText = styled.text`
   margin-top: 18px;
   text-shadow: 2px 2px 4px #1e1e1e;
 `;
+export const ReturnText = styled.button`
+  color: #fffdf7;
+  font-size: 11px;
+  font-family: "Press Start 2P";
+  margin-top: 18px;
+  text-shadow: 2px 2px 4px #1e1e1e;
+  text-decoration: underline;
+  background-color: transparent;
+  border: 0;
+  &:hover,
+  &:focus {
+    color: #00b4d8;
+  }
+`;

@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { AuxiliarText, Base, Body, Box, InitialTitle } from "./Styles";
+import {
+  AuxiliarText,
+  Base,
+  Body,
+  Box,
+  InitialTitle,
+  ReturnText,
+} from "./Styles";
 import Input from "../../Styles/Input";
 import StartButton from "../../Styles/StartButton";
 
@@ -53,6 +60,13 @@ function Cadastro() {
           <StartButton onClick={() => createNewUsuario()} marginTop="30px">
             Start
           </StartButton>
+          <ReturnText
+            onClick={() => {
+              history.push("/login");
+            }}
+          >
+            Ja é um Jogador?
+          </ReturnText>
         </Box>
       </Base>
     </Body>
