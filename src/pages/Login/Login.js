@@ -5,15 +5,17 @@ import Input from "../../Styles/Input";
 import StartButton from "../../Styles/StartButton";
 
 import * as managerService from "../../services/managerService";
+import { login } from "../../services/auth";
 
 function Login() {
   const history = useHistory();
   const [email, setEmail] = useState("");
 
-  async function getUsuarioByEmail() {
+  async function loginUsuario() {
     const result = await managerService.getUsuarioByEmail(email);
     if (result) {
-      history.push("/home");
+      login(email);
+      history.push("/home", { usuario: result });
     } else {
       window.location.reload();
     }
@@ -32,7 +34,7 @@ function Login() {
               setEmail(e.target.value);
             }}
           />
-          <StartButton onClick={() => getUsuarioByEmail()} marginTop="30px">
+          <StartButton onClick={() => loginUsuario()} marginTop="30px">
             Start
           </StartButton>
           <AuxiliarText
