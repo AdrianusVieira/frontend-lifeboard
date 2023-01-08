@@ -39,7 +39,7 @@ export const InitialTitle = styled.text`
 `;
 export const AuxiliarText = styled.text`
   color: #fffdf7;
-  font-size: 20px;
+  font-size: 25px;
   font-family: "Press Start 2P";
   margin-top: 18px;
   text-shadow: 2px 2px 4px #1e1e1e;
