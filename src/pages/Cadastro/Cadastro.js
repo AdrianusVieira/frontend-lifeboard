@@ -10,6 +10,7 @@ import {
 } from "./Styles";
 import Input from "../../Styles/Input";
 import StartButton from "../../Styles/StartButton";
+import { login, logout } from "../../services/auth";
 
 import * as managerService from "../../services/managerService";
 
@@ -17,16 +18,23 @@ function Cadastro() {
   const history = useHistory();
   const [newUsuario, setNewUsuario] = useState({});
 
+  useEffect(() => {
+    logout();
+  }, []);
+
   function fillingUsuarioData(e) {
     const { value, name } = e.target;
     setNewUsuario({ ...newUsuario, [name]: value });
   }
   async function createNewUsuario() {
-    const result = await managerService.createUsuario(newUsuario);
+    const result = await managerService.getUsuarioByEmail(newUsuario.email);
     if (result) {
-      history.push("/home");
-    } else {
+      //email ja usado
       window.location.reload();
+    } else {
+      await managerService.createUsuario(newUsuario);
+      login(newUsuario.email);
+      history.push("/home");
     }
   }
 

@@ -5,11 +5,15 @@ import Input from "../../Styles/Input";
 import StartButton from "../../Styles/StartButton";
 
 import * as managerService from "../../services/managerService";
-import { login } from "../../services/auth";
+import { login, logout } from "../../services/auth";
 
 function Login() {
   const history = useHistory();
   const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    logout();
+  }, []);
 
   async function loginUsuario() {
     const result = await managerService.getUsuarioByEmail(email);

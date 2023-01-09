@@ -4,3 +4,7 @@ export const login = (email) => {
   sessionStorage.setItem(CHAVE_EMAIL, email);
 };
 export const getEmail = () => sessionStorage.getItem(CHAVE_EMAIL);
+
+export const logout = () => {
+  sessionStorage.removeItem(CHAVE_EMAIL);
+};

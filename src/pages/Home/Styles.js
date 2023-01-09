@@ -42,3 +42,58 @@ export const PhotoSection = styled.div`
   height: 100%;
   font-size: 8em;
 `;
+export const DataSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 30%;
+  height: 100%;
+`;
+
+export const DataText = styled.text`
+  color: #fffdf7;
+  font-size: 18px;
+  font-family: "VT323";
+  margin-top: 6px;
+  text-shadow: 2px 2px 6px #1e1e1e;
+`;
+
+export const LevelText = styled.text`
+  color: #fffdf7;
+  font-size: 25px;
+  margin-top: 16px;
+  font-family: "Press Start 2P";
+  text-shadow: 2px 2px 4px #1e1e1e;
+`;
+
+export const LevelSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
+export const BarView = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 60%;
+  height: 100%;
+`;
+export const ExpView = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 100%;
+`;
+export const ExpText = styled.text`
+  color: #fffdf7;
+  font-size: 18px;
+  font-family: "VT323";
+  margin-left: 2px;
+`;
