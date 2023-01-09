@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ErrorScreen from "../../components/ErrorScreen";
 import {
   Base,
   Body,
@@ -25,7 +26,11 @@ function Home() {
   async function getUsuario() {
     const email = getEmail();
     const result = await managerService.getUsuarioByEmail(email);
-    setUsuario(result);
+    if (result) {
+      setUsuario(result);
+    } else {
+      setUsuario("");
+    }
   }
 
   useEffect(() => {
@@ -52,34 +57,38 @@ function Home() {
 
   return (
     <Body>
-      <Base>
-        <Box>
-          <PhotoSection>
-            <UserOutlined />
-          </PhotoSection>
-          <DataSection>
-            <DataText>{usuario.nome}</DataText>
-            <DataText>{usuario.email}</DataText>
-            <DataText>{usuario.data_nascimento}</DataText>
-            <LevelText>Lvl: {usuario.level}</LevelText>
-            <LevelSection>
-              <BarView>
-                <Progress
-                  percent={percent}
-                  strokeColor="#e0c3f7"
-                  trailColor="#745296"
-                  showInfo={false}
-                />
-              </BarView>
-              <ExpView>
-                <ExpText>
-                  {usuario.exp_atual} / {total_exp}
-                </ExpText>
-              </ExpView>
-            </LevelSection>
-          </DataSection>
-        </Box>
-      </Base>
+      {usuario ? (
+        <Base>
+          <Box>
+            <PhotoSection>
+              <UserOutlined />
+            </PhotoSection>
+            <DataSection>
+              <DataText>{usuario.nome}</DataText>
+              <DataText>{usuario.email}</DataText>
+              <DataText>{usuario.data_nascimento}</DataText>
+              <LevelText>Lvl: {usuario.level}</LevelText>
+              <LevelSection>
+                <BarView>
+                  <Progress
+                    percent={percent}
+                    strokeColor="#e0c3f7"
+                    trailColor="#745296"
+                    showInfo={false}
+                  />
+                </BarView>
+                <ExpView>
+                  <ExpText>
+                    {usuario.exp_atual} / {total_exp}
+                  </ExpText>
+                </ExpView>
+              </LevelSection>
+            </DataSection>
+          </Box>
+        </Base>
+      ) : (
+        <ErrorScreen />
+      )}
     </Body>
   );
 }
