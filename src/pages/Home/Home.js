@@ -27,7 +27,9 @@ import LoadingScreen from "../../components/LoadingScreen";
 import EditProfile from "../../components/EditProfile/EditProfile";
 import { sleep } from "../../utils/sleep";
 import { useHistory } from "react-router-dom";
+import DeleteProfile from "../../components/DeleteProfile";
 import * as managerService from "../../services/managerService";
+
 
 function Home() {
   const history = useHistory();
@@ -92,8 +94,12 @@ function Home() {
                   </>
                 ) : (
                   <>
-                    {state === "DELET" ? (
-                      <></>
+                    {state === "DELETE" ? (
+                      <>
+                        <DeleteProfile
+                          fecharDelete={() => setState("")}
+                        />
+                      </>
                     ) : (
                       <>
                         <PhotoSection>
@@ -135,7 +141,13 @@ function Home() {
                               </AuxiliarText>
                             </AuxiliarView>
                             <AuxiliarView>
-                              <AuxiliarText>Deletar Personagem</AuxiliarText>
+                              <AuxiliarText
+                                onClick={() => {
+                                  setState("DELETE");
+                                }}
+                              >
+                                Deletar Personagem
+                              </AuxiliarText>
                             </AuxiliarView>
                           </AuxiliarSection>
                         </PhotoSection>
