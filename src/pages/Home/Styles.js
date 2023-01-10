@@ -154,3 +154,12 @@ export const AuxiliarText = styled.button`
     color: #00b4d8;
   }
 `;
+
+export const ButtonSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding-top: 1%;
+`;

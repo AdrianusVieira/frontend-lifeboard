@@ -19,6 +19,7 @@ import {
   AuxiliarSection,
   AuxiliarText,
   AuxiliarView,
+  ButtonSection,
 } from "./Styles";
 import { UserOutlined } from "@ant-design/icons";
 import { Progress } from "antd";
@@ -29,6 +30,7 @@ import { sleep } from "../../utils/sleep";
 import { useHistory } from "react-router-dom";
 import DeleteProfile from "../../components/DeleteProfile";
 import * as managerService from "../../services/managerService";
+import Button from "../../Styles/Button";
 
 function Home() {
   const history = useHistory();
@@ -181,6 +183,10 @@ function Home() {
                   </>
                 )}
               </Box>
+              <ButtonSection>
+                <Button width="30%" height="60px">To Do</Button>
+                <Button width="30%" height="60px">Financeiro</Button>
+              </ButtonSection>
             </Base>
           ) : (
             <ErrorScreen />
