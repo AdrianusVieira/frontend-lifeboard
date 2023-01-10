@@ -16,6 +16,9 @@ import {
   PatrimonyText,
   PatrimonyCircle,
   PatrimonyCircleText,
+  AuxiliarSection,
+  AuxiliarText,
+  AuxiliarView,
 } from "./Styles";
 import { UserOutlined } from "@ant-design/icons";
 import { Progress } from "antd";
@@ -79,6 +82,17 @@ function Home() {
               <Box>
                 <PhotoSection>
                   <UserOutlined />
+                  <AuxiliarSection>
+                    <AuxiliarView>
+                      <AuxiliarText>Editar Personagem</AuxiliarText>
+                    </AuxiliarView>
+                    <AuxiliarView>
+                      <AuxiliarText>Trocar Personagem</AuxiliarText>
+                    </AuxiliarView>
+                    <AuxiliarView>
+                      <AuxiliarText>Deletar Personagem</AuxiliarText>
+                    </AuxiliarView>
+                  </AuxiliarSection>
                 </PhotoSection>
                 <DataSection>
                   <DataText>{usuario.nome}</DataText>

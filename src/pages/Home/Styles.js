@@ -24,7 +24,7 @@ export const Base = styled.div`
 export const Box = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   width: 90%;
   height: 40%;
@@ -36,7 +36,7 @@ export const Box = styled.div`
 export const PhotoSection = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   width: 30%;
   height: 100%;
@@ -45,7 +45,7 @@ export const PhotoSection = styled.div`
 export const DataSection = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-start;
   width: 30%;
   height: 100%;
@@ -55,14 +55,12 @@ export const DataText = styled.text`
   color: #fffdf7;
   font-size: 18px;
   font-family: "VT323";
-  margin-top: 6px;
   text-shadow: 2px 2px 6px #1e1e1e;
 `;
 
 export const LevelText = styled.text`
   color: #fffdf7;
   font-size: 25px;
-  margin-top: 16px;
   font-family: "Press Start 2P";
   text-shadow: 2px 2px 4px #1e1e1e;
 `;
@@ -73,7 +71,6 @@ export const LevelSection = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  height: 100%;
 `;
 export const BarView = styled.div`
   display: flex;
@@ -81,7 +78,6 @@ export const BarView = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 60%;
-  height: 100%;
 `;
 export const ExpView = styled.div`
   display: flex;
@@ -89,7 +85,6 @@ export const ExpView = styled.div`
   justify-content: center;
   align-items: center;
   width: 40%;
-  height: 100%;
 `;
 export const ExpText = styled.text`
   color: #fffdf7;
@@ -103,7 +98,7 @@ export const PatrimonySection = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 40%;
+  width: 35%;
   height: 100%;
 `;
 
@@ -130,4 +125,32 @@ export const PatrimonyCircle = styled.button`
   margin-top: 20px;
 `;
 
+export const AuxiliarSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
+export const AuxiliarView = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 32%;
+`;
 
+export const AuxiliarText = styled.button`
+  color: #fffdf7;
+  font-size: 8px;
+  font-family: "Press Start 2P";
+  margin-top: 18px;
+  text-shadow: 2px 2px 4px #1e1e1e;
+  text-decoration: underline;
+  background-color: transparent;
+  border: 0;
+  &:hover,
+  &:focus {
+    color: #00b4d8;
+  }
+`;
