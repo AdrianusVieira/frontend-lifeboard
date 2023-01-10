@@ -24,6 +24,7 @@ import { UserOutlined } from "@ant-design/icons";
 import { Progress } from "antd";
 import { getEmail } from "../../services/auth";
 import LoadingScreen from "../../components/LoadingScreen";
+import EditProfile from "../../components/EditProfile/EditProfile";
 import { sleep } from "../../utils/sleep";
 import { useHistory } from "react-router-dom";
 import * as managerService from "../../services/managerService";
@@ -34,6 +35,7 @@ function Home() {
   const [total_exp, setTotal_exp] = useState("");
   const [percent, setPercent] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [state, setState] = useState("");
 
   async function getUsuario() {
     const email = getEmail();
@@ -81,67 +83,91 @@ function Home() {
           {usuario ? (
             <Base>
               <Box>
-                <PhotoSection>
-                  {usuario.foto ? (
-                    <>
-                      <img
-                        src={usuario.foto}
-                        className="foto"
-                        alt="fotoPerfil"
-                        height="70%"
-                        width="70%"
-                      ></img>
-                    </>
-                  ) : (
-                    <>
-                      {" "}
-                      <UserOutlined style={{ color: "#E0C3F7", fontSize:"150px" }} />
-                    </>
-                  )}
-
-                  <AuxiliarSection>
-                    <AuxiliarView>
-                      <AuxiliarText>Editar Personagem</AuxiliarText>
-                    </AuxiliarView>
-                    <AuxiliarView>
-                      <AuxiliarText
-                        onClick={() => {
-                          history.push("/login");
-                        }}
-                      >
-                        Trocar Personagem
-                      </AuxiliarText>
-                    </AuxiliarView>
-                    <AuxiliarView>
-                      <AuxiliarText>Deletar Personagem</AuxiliarText>
-                    </AuxiliarView>
-                  </AuxiliarSection>
-                </PhotoSection>
-                <DataSection>
-                  <DataText>{usuario.nome}</DataText>
-                  <DataText>{usuario.email}</DataText>
-                  <DataText>{usuario.data_nascimento}</DataText>
-                  <LevelText>Lvl: {usuario.level}</LevelText>
-                  <LevelSection>
-                    <BarView>
-                      <Progress
-                        percent={percent}
-                        strokeColor="#e0c3f7"
-                        trailColor="#745296"
-                        showInfo={false}
-                      />
-                    </BarView>
-                    <ExpView>
-                      <ExpText>
-                        {usuario.exp_atual} / {total_exp}
-                      </ExpText>
-                    </ExpView>
-                  </LevelSection>
-                </DataSection>
-                <PatrimonySection>
-                  <PatrimonyText>Patrimonio Total</PatrimonyText>
-                  <PatrimonyCircle>R$ 1000.00</PatrimonyCircle>
-                </PatrimonySection>
+                {state === "EDIT" ? (
+                  <>
+                    <EditProfile
+                      usuario={usuario}
+                      fecharEdit={() => setState("")}
+                    />
+                  </>
+                ) : (
+                  <>
+                    {state === "DELET" ? (
+                      <></>
+                    ) : (
+                      <>
+                        <PhotoSection>
+                          {usuario.foto ? (
+                            <>
+                              <img
+                                src={usuario.foto}
+                                className="foto"
+                                alt="fotoPerfil"
+                                height="70%"
+                                width="70%"
+                              ></img>
+                            </>
+                          ) : (
+                            <>
+                              {" "}
+                              <UserOutlined
+                                style={{ color: "#E0C3F7", fontSize: "150px" }}
+                              />
+                            </>
+                          )}
+                          <AuxiliarSection>
+                            <AuxiliarView>
+                              <AuxiliarText
+                                onClick={() => {
+                                  setState("EDIT");
+                                }}
+                              >
+                                Editar Personagem
+                              </AuxiliarText>
+                            </AuxiliarView>
+                            <AuxiliarView>
+                              <AuxiliarText
+                                onClick={() => {
+                                  history.push("/login");
+                                }}
+                              >
+                                Trocar Personagem
+                              </AuxiliarText>
+                            </AuxiliarView>
+                            <AuxiliarView>
+                              <AuxiliarText>Deletar Personagem</AuxiliarText>
+                            </AuxiliarView>
+                          </AuxiliarSection>
+                        </PhotoSection>
+                        <DataSection>
+                          <DataText>{usuario.nome}</DataText>
+                          <DataText>{usuario.email}</DataText>
+                          <DataText>{usuario.data_nascimento}</DataText>
+                          <LevelText>Lvl: {usuario.level}</LevelText>
+                          <LevelSection>
+                            <BarView>
+                              <Progress
+                                percent={percent}
+                                strokeColor="#e0c3f7"
+                                trailColor="#745296"
+                                showInfo={false}
+                              />
+                            </BarView>
+                            <ExpView>
+                              <ExpText>
+                                {usuario.exp_atual} / {total_exp}
+                              </ExpText>
+                            </ExpView>
+                          </LevelSection>
+                        </DataSection>
+                        <PatrimonySection>
+                          <PatrimonyText>Patrimonio Total</PatrimonyText>
+                          <PatrimonyCircle>R$ 1000.00</PatrimonyCircle>
+                        </PatrimonySection>
+                      </>
+                    )}
+                  </>
+                )}
               </Box>
             </Base>
           ) : (

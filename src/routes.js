@@ -7,12 +7,12 @@ import Login from "./pages/Login";
 function Routes() {
   return (
     <BrowserRouter>
-        <Switch>
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/cadastro" component={Cadastro} />
-          <Route exact path="/Home" component={Home} />
-          <Route component={() => <Redirect to="/login" />} />
-        </Switch>
+      <Switch>
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/cadastro" component={Cadastro} />
+        <Route exact path="/home" component={Home} />
+        <Route component={() => <Redirect to="/login" />} />
+      </Switch>
     </BrowserRouter>
   );
 }

@@ -1,53 +1,51 @@
 import styled from "styled-components";
 
-export const Body = styled.div`
+export const Box = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 100%;
+  background-color: #5700d5;
 `;
-export const Base = styled.div`
-  margin-top: 20px;
+export const ChangeTitle = styled.text`
+  color: #fffdf7;
+  font-size: 30px;
+  font-family: "Press Start 2P";
+  text-shadow: 2px 2px 4px #1e1e1e;
+`;
+export const UploadBox = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  width: 90%;
-  height: 90%;
-  background-color: #e0c3f7;
-  border-radius: 8px;
-  box-shadow: 0px 0px 4px #e0c3f7;
-  padding-top: 1%;
+  width: auto;
+  height: auto;
 `;
-export const Box = styled.div`
+
+export const ChangeSection = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  width: 90%;
-  height: 50%;
-  background-color: #5700d5;
-  border-radius: 16px;
-  box-shadow: 2px 2px 4px #1e1e1e, -1px -1px 4px #1e1e1e;
-  padding: 1% 1% 1% 1%;
+  width: 100%;
+  height: 100%;
+  margin-top: 12px;
 `;
 export const PhotoSection = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  width: 30%;
   height: 100%;
-  font-size: 8em;
+  width: 40%;
 `;
 export const DataSection = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: flex-start;
-  width: 30%;
+  width: 40%;
   height: 100%;
 `;
 
@@ -128,7 +126,7 @@ export const PatrimonyCircle = styled.button`
 export const AuxiliarSection = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 100%;
 `;
@@ -137,14 +135,13 @@ export const AuxiliarView = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 32%;
+  width: 40%;
 `;
 
 export const AuxiliarText = styled.button`
   color: #fffdf7;
-  font-size: 8px;
+  font-size: 12px;
   font-family: "Press Start 2P";
-  margin-top: 18px;
   text-shadow: 2px 2px 4px #1e1e1e;
   text-decoration: underline;
   background-color: transparent;
