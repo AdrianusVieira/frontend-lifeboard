@@ -25,10 +25,11 @@ import { Progress } from "antd";
 import { getEmail } from "../../services/auth";
 import LoadingScreen from "../../components/LoadingScreen";
 import { sleep } from "../../utils/sleep";
+import { useHistory } from "react-router-dom";
 import * as managerService from "../../services/managerService";
-import StartButton from "../../Styles/StartButton/StartButton";
 
 function Home() {
+  const history = useHistory();
   const [usuario, setUsuario] = useState({});
   const [total_exp, setTotal_exp] = useState("");
   const [percent, setPercent] = useState(0);
@@ -61,7 +62,7 @@ function Home() {
   }, [usuario]);
 
   async function calculatingBarPercent() {
-    const aux = (100 * 100) / total_exp;
+    const aux = (usuario.exp_atual * 100) / total_exp;
     await sleep(200);
     setPercent(aux);
   }
@@ -81,13 +82,35 @@ function Home() {
             <Base>
               <Box>
                 <PhotoSection>
-                  <UserOutlined />
+                  {usuario.foto ? (
+                    <>
+                      <img
+                        src={usuario.foto}
+                        className="foto"
+                        alt="fotoPerfil"
+                        height="70%"
+                        width="70%"
+                      ></img>
+                    </>
+                  ) : (
+                    <>
+                      {" "}
+                      <UserOutlined style={{ color: "#E0C3F7", fontSize:"150px" }} />
+                    </>
+                  )}
+
                   <AuxiliarSection>
                     <AuxiliarView>
                       <AuxiliarText>Editar Personagem</AuxiliarText>
                     </AuxiliarView>
                     <AuxiliarView>
-                      <AuxiliarText>Trocar Personagem</AuxiliarText>
+                      <AuxiliarText
+                        onClick={() => {
+                          history.push("/login");
+                        }}
+                      >
+                        Trocar Personagem
+                      </AuxiliarText>
                     </AuxiliarView>
                     <AuxiliarView>
                       <AuxiliarText>Deletar Personagem</AuxiliarText>
