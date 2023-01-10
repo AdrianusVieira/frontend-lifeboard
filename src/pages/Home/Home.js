@@ -16,16 +16,21 @@ import {
 import { UserOutlined } from "@ant-design/icons";
 import { Progress } from "antd";
 import { getEmail } from "../../services/auth";
+import LoadingScreen from "../../components/LoadingScreen";
+import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/managerService";
 
 function Home() {
   const [usuario, setUsuario] = useState({});
   const [total_exp, setTotal_exp] = useState("");
   const [percent, setPercent] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   async function getUsuario() {
     const email = getEmail();
     const result = await managerService.getUsuarioByEmail(email);
+    await sleep(4000);
+    setLoading(false);
     if (result) {
       setUsuario(result);
     } else {
@@ -47,8 +52,9 @@ function Home() {
     calculatingTotalExp();
   }, [usuario]);
 
-  function calculatingBarPercent() {
-    const aux = (usuario.exp_atual * 100) / total_exp;
+  async function calculatingBarPercent() {
+    const aux = (100 * 100) / total_exp;
+    await sleep(200);
     setPercent(aux);
   }
   useEffect(() => {
@@ -57,37 +63,45 @@ function Home() {
 
   return (
     <Body>
-      {usuario ? (
-        <Base>
-          <Box>
-            <PhotoSection>
-              <UserOutlined />
-            </PhotoSection>
-            <DataSection>
-              <DataText>{usuario.nome}</DataText>
-              <DataText>{usuario.email}</DataText>
-              <DataText>{usuario.data_nascimento}</DataText>
-              <LevelText>Lvl: {usuario.level}</LevelText>
-              <LevelSection>
-                <BarView>
-                  <Progress
-                    percent={percent}
-                    strokeColor="#e0c3f7"
-                    trailColor="#745296"
-                    showInfo={false}
-                  />
-                </BarView>
-                <ExpView>
-                  <ExpText>
-                    {usuario.exp_atual} / {total_exp}
-                  </ExpText>
-                </ExpView>
-              </LevelSection>
-            </DataSection>
-          </Box>
-        </Base>
+      {loading ? (
+        <>
+          <LoadingScreen />
+        </>
       ) : (
-        <ErrorScreen />
+        <>
+          {usuario ? (
+            <Base>
+              <Box>
+                <PhotoSection>
+                  <UserOutlined />
+                </PhotoSection>
+                <DataSection>
+                  <DataText>{usuario.nome}</DataText>
+                  <DataText>{usuario.email}</DataText>
+                  <DataText>{usuario.data_nascimento}</DataText>
+                  <LevelText>Lvl: {usuario.level}</LevelText>
+                  <LevelSection>
+                    <BarView>
+                      <Progress
+                        percent={percent}
+                        strokeColor="#e0c3f7"
+                        trailColor="#745296"
+                        showInfo={false}
+                      />
+                    </BarView>
+                    <ExpView>
+                      <ExpText>
+                        {usuario.exp_atual} / {total_exp}
+                      </ExpText>
+                    </ExpView>
+                  </LevelSection>
+                </DataSection>
+              </Box>
+            </Base>
+          ) : (
+            <ErrorScreen />
+          )}
+        </>
       )}
     </Body>
   );
