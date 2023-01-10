@@ -30,7 +30,6 @@ import { useHistory } from "react-router-dom";
 import DeleteProfile from "../../components/DeleteProfile";
 import * as managerService from "../../services/managerService";
 
-
 function Home() {
   const history = useHistory();
   const [usuario, setUsuario] = useState({});
@@ -98,6 +97,7 @@ function Home() {
                       <>
                         <DeleteProfile
                           fecharDelete={() => setState("")}
+                          startLoading={() => setLoading(true)}
                         />
                       </>
                     ) : (

@@ -18,6 +18,7 @@ export const getUsuarioByEmail = async (email) => {
       return res.data[0];
     })
     .catch((error) => console.warn(error));
+    
   return usuario;
 };
 
@@ -40,4 +41,14 @@ export const updateFotoUsuario = async (email, foto) => {
     .catch((error) => console.warn(error));
 
   return newUsuario;
+};
+
+export const deleteUsuarioByEmail = async (email) => {
+  const result = await requesterService
+    .deleteUsuarioByEmail(email)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.warn(error));
+  return result
 };

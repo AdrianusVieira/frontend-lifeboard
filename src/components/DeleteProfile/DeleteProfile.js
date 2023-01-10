@@ -7,8 +7,22 @@ import {
   TitleSection,
 } from "./Styles";
 import StartButton from "../../Styles/StartButton";
+import { getEmail } from "../../services/auth";
+import { useHistory } from "react-router-dom";
+import * as managerService from "../../services/managerService";
+import { sleep } from "../../utils/sleep";
 
 function DeleteProfile(props) {
+  const history = useHistory();
+  async function deleteUsuario() {
+    props.startLoading();
+    const email = getEmail();
+    await managerService.deleteUsuarioByEmail(email);
+    await sleep(4000).then(() => {
+      history.push("/login");
+    });
+  }
+
   return (
     <Box>
       <TitleSection>
@@ -18,7 +32,7 @@ function DeleteProfile(props) {
           <StartButton onClick={() => props.fecharDelete()} marginTop="30px">
             NAO
           </StartButton>
-          <StartButton onClick={() => console.log("oi")} marginTop="30px">
+          <StartButton onClick={() => deleteUsuario()} marginTop="30px">
             SIM
           </StartButton>
         </ButtonSection>
