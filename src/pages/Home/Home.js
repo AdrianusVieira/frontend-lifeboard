@@ -12,6 +12,10 @@ import {
   ExpText,
   ExpView,
   BarView,
+  PatrimonySection,
+  PatrimonyText,
+  PatrimonyCircle,
+  PatrimonyCircleText,
 } from "./Styles";
 import { UserOutlined } from "@ant-design/icons";
 import { Progress } from "antd";
@@ -19,6 +23,7 @@ import { getEmail } from "../../services/auth";
 import LoadingScreen from "../../components/LoadingScreen";
 import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/managerService";
+import StartButton from "../../Styles/StartButton/StartButton";
 
 function Home() {
   const [usuario, setUsuario] = useState({});
@@ -96,6 +101,10 @@ function Home() {
                     </ExpView>
                   </LevelSection>
                 </DataSection>
+                <PatrimonySection>
+                  <PatrimonyText>Patrimonio Total</PatrimonyText>
+                  <PatrimonyCircle>R$ 1000.00</PatrimonyCircle>
+                </PatrimonySection>
               </Box>
             </Base>
           ) : (
