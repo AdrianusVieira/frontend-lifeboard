@@ -15,11 +15,16 @@ import {
 import { Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
+import * as managerService from "../../services/managerService";
 
 function EditProfile(props) {
   const history = useHistory();
-  const [newUsuario, setNewUsuario] = useState({});
+  const [newUsuario, setNewUsuario] = useState();
   const [imageUrl, setImageUrl] = useState();
+
+  useEffect(() => {
+    setImageUrl(props.usuario.foto);
+  }, []);
 
   function fillingUsuarioData(e) {
     const { value, name } = e.target;
@@ -51,6 +56,16 @@ function EditProfile(props) {
     </div>
   );
   async function editUsuario() {
+    if (newUsuario) {
+      await managerService.updateUsuarioByEmail(
+        props.usuario.email,
+        newUsuario
+      );
+    }
+    if (imageUrl) {
+      await managerService.updateFotoUsuario(props.usuario.email, imageUrl);
+    }
+
     window.location.reload();
   }
 
@@ -89,10 +104,10 @@ function EditProfile(props) {
                 onChange={handleChange}
                 icon={<UploadOutlined />}
               >
-                {props.usuario.foto ? (
+                {imageUrl ? (
                   <>
                     <img
-                      src={props.usuario.foto}
+                      src={imageUrl}
                       className="foto"
                       alt="fotoPerfil"
                       height="100%"

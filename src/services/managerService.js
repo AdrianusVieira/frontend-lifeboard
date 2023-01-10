@@ -2,13 +2,13 @@ import * as requesterService from "./requesterService";
 
 //usuario
 export const createUsuario = async (usuario) => {
-  const novoUsuario = await requesterService
+  const newUsuario = await requesterService
     .createUsuario(usuario)
     .then((res) => {
       return res;
     })
     .catch((error) => console.warn(error));
-  return novoUsuario;
+  return newUsuario;
 };
 
 export const getUsuarioByEmail = async (email) => {
@@ -19,4 +19,25 @@ export const getUsuarioByEmail = async (email) => {
     })
     .catch((error) => console.warn(error));
   return usuario;
+};
+
+export const updateUsuarioByEmail = async (email, usuario) => {
+  const newUsuario = await requesterService
+    .updateUsuarioByEmail(email, usuario)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.warn(error));
+  return newUsuario;
+};
+
+export const updateFotoUsuario = async (email, foto) => {
+  const usuario = { foto: foto };
+  const newUsuario = await requesterService.updateUsuarioByEmail(email, usuario)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.warn(error));
+
+  return newUsuario;
 };
