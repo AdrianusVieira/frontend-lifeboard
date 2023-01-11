@@ -15,6 +15,7 @@ import { sleep } from "../../utils/sleep";
 import { UserOutlined, LeftCircleOutlined } from "@ant-design/icons";
 import * as managerService from "../../services/managerService";
 import LoadingFinances from "../../components/LoadingFinances";
+import FinancesInitial from "../../components/FinancesInitial";
 
 function Financeiro() {
   const history = useHistory();
@@ -93,6 +94,13 @@ function Financeiro() {
                 </AuxiliarText>
               </ReturnSection>
             </Box>
+            {usuario.patrimonio_total ? (
+              <></>
+            ) : (
+              <>
+                <FinancesInitial usuario={usuario} />
+              </>
+            )}
           </Base>
         </>
       )}
