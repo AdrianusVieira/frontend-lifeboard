@@ -29,8 +29,8 @@ import EditProfile from "../../components/EditProfile/EditProfile";
 import { sleep } from "../../utils/sleep";
 import { useHistory } from "react-router-dom";
 import DeleteProfile from "../../components/DeleteProfile";
-import * as managerService from "../../services/managerService";
 import Button from "../../Styles/Button";
+import * as managerService from "../../services/managerService";
 
 function Home() {
   const history = useHistory();
@@ -184,8 +184,18 @@ function Home() {
                 )}
               </Box>
               <ButtonSection>
-                <Button width="30%" height="60px">To Do</Button>
-                <Button width="30%" height="60px">Financeiro</Button>
+                <Button width="30%" height="60px">
+                  To Do
+                </Button>
+                <Button
+                  onClick={() => {
+                    history.push("/financeiro");
+                  }}
+                  width="30%"
+                  height="60px"
+                >
+                  Financeiro
+                </Button>
               </ButtonSection>
             </Base>
           ) : (

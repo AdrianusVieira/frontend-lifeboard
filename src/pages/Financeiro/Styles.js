@@ -1,0 +1,52 @@
+import styled from "styled-components";
+
+export const Body = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
+export const Base = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 90%;
+  height: 100%;
+  background-color: #e0c3f7;
+  box-shadow: 0px 0px 4px #e0c3f7;
+`;
+export const Box = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 98%;
+  height: 15%;
+  background-color: #5700d5;
+  box-shadow: 0px 0px 4px #1e1e1e, 0px 0px 4px #1e1e1e;
+  padding: 1% 1% 1% 1%;
+`;
+export const PhotoSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
+export const PatrimonySection = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
+export const ReturnSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
