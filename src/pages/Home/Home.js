@@ -176,7 +176,27 @@ function Home() {
                         </DataSection>
                         <PatrimonySection>
                           <PatrimonyText>Patrimonio Total</PatrimonyText>
-                          <PatrimonyCircle>R$ 1000.00</PatrimonyCircle>
+                          {usuario.patrimonio_total ? (
+                            <>
+                              <PatrimonyCircle
+                                onClick={() => {
+                                  history.push("/financeiro");
+                                }}
+                              >
+                                R$ {usuario.patrimonio_total}
+                              </PatrimonyCircle>
+                            </>
+                          ) : (
+                            <>
+                              <PatrimonyCircle
+                                onClick={() => {
+                                  history.push("/financeiro");
+                                }}
+                              >
+                                Adicione seu Patrimonio
+                              </PatrimonyCircle>
+                            </>
+                          )}
                         </PatrimonySection>
                       </>
                     )}
@@ -184,8 +204,14 @@ function Home() {
                 )}
               </Box>
               <ButtonSection>
-                <Button width="30%" height="60px">
-                  To Do
+                <Button
+                  onClick={() => {
+                    history.push("/tarefas");
+                  }}
+                  width="30%"
+                  height="60px"
+                >
+                  Tarefas
                 </Button>
                 <Button
                   onClick={() => {

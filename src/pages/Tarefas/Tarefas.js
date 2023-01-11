@@ -16,7 +16,7 @@ import { UserOutlined, LeftCircleOutlined } from "@ant-design/icons";
 import * as managerService from "../../services/managerService";
 import LoadingFinances from "../../components/LoadingFinances";
 
-function Financeiro() {
+function Tarefas() {
   const history = useHistory();
   const [usuario, setUsuario] = useState({});
   const [loading, setLoading] = useState(true);
@@ -100,4 +100,4 @@ function Financeiro() {
   );
 }
 
-export default Financeiro;
+export default Tarefas;
