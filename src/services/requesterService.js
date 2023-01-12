@@ -9,3 +9,6 @@ export const deleteUsuarioByEmail = (email) => api.delete(`/usuario/${email}`);
 
 //carteira
 export const createCarteira = (carteira) => api.post("/carteira", carteira);
+
+//fundo
+export const createFundo = (fundo) => api.post("/fundo", fundo);

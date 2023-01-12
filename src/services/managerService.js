@@ -64,3 +64,14 @@ export const createCarteira = async (carteira) => {
     .catch((error) => console.warn(error));
   return newCarteira;
 };
+
+//fundo
+export const createFundo = async (fundo) => {
+  const newFundo = await requesterService
+    .createFundo(fundo)
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => console.warn(error));
+  return newFundo;
+};

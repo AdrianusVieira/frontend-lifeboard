@@ -18,7 +18,7 @@ export const TitleSection = styled.div`
 `;
 export const InitialTitle = styled.text`
   color: #5700d5;
-  font-size: 50px;
+  font-size: 40px;
   font-family: "Press Start 2P";
   text-shadow: 2px 2px 4px #1e1e1e;
 `;
@@ -46,6 +46,7 @@ export const CreationSection = styled.div`
   background-color: #5700d5;
   border-radius: 16px;
   box-shadow: 2px 2px 4px #1e1e1e, -1px -1px 4px #1e1e1e;
+  padding: 1%;
 `;
 export const AuxiliarText = styled.text`
   color: #fffdf7;
