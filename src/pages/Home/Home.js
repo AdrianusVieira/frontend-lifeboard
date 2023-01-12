@@ -117,7 +117,6 @@ function Home() {
                             </>
                           ) : (
                             <>
-                              {" "}
                               <UserOutlined
                                 style={{ color: "#E0C3F7", fontSize: "150px" }}
                               />

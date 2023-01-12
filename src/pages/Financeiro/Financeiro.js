@@ -8,20 +8,26 @@ import {
   ReturnSection,
   PatrimonyText,
   AuxiliarText,
+  ButtonSection,
 } from "./Styles";
 import { useHistory } from "react-router-dom";
 import { getEmail } from "../../services/auth";
 import { sleep } from "../../utils/sleep";
 import { UserOutlined, LeftCircleOutlined } from "@ant-design/icons";
-import * as managerService from "../../services/managerService";
 import LoadingFinances from "../../components/LoadingFinances";
 import FinancesInitial from "../../components/FinancesInitial";
+import Button from "../../Styles/Button";
+import * as managerService from "../../services/managerService";
+import Carteiras from "../../components/Carteiras/Carteiras";
+import Fundos from "../../components/Fundos/Fundos";
+import Investimentos from "../../components/Investimentos/Investimentos";
 
 function Financeiro() {
   const history = useHistory();
   const [usuario, setUsuario] = useState({});
   const [loading, setLoading] = useState(true);
   const [isIniciating, setIsIniciating] = useState(false);
+  const [components, setComponents] = useState("");
 
   async function getUsuario() {
     const email = getEmail();
@@ -116,7 +122,60 @@ function Financeiro() {
                 />
               </>
             ) : (
-              <></>
+              <>
+                <ButtonSection>
+                  <Button
+                    onClick={() => {
+                      setComponents("CARTEIRAS");
+                    }}
+                    width="20%"
+                    height="60px"
+                  >
+                    Carteiras
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setComponents("FUNDOS");
+                    }}
+                    width="20%"
+                    height="60px"
+                  >
+                    Fundos
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setComponents("INVESTIMENTOS");
+                    }}
+                    width="20%"
+                    height="60px"
+                  >
+                    Investimentos
+                  </Button>
+                </ButtonSection>
+                {components === "CARTEIRAS" ? (
+                  <>
+                    <Carteiras usuario={usuario} />
+                  </>
+                ) : (
+                  <>
+                    {components === "FUNDOS" ? (
+                      <>
+                        <Fundos usuario={usuario} />
+                      </>
+                    ) : (
+                      <>
+                        {components === "INVESTIMENTOS" ? (
+                          <>
+                            <Investimentos usuario={usuario} />
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
+              </>
             )}
           </Base>
         </>
