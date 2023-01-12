@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Body, CreationTitle, Box } from "./Styles";
-import { useHistory } from "react-router-dom";
 import Input from "../../Styles/Input";
 import StartButton from "../../Styles/StartButton";
 import LoadingFinances from "../LoadingFinances";
@@ -8,7 +7,6 @@ import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/managerService";
 
 function CarteiraCreation(props) {
-  const history = useHistory();
   const [newCarteira, setNewCarteira] = useState({
     nome: "",
     patrimonio: 0,
@@ -24,15 +22,22 @@ function CarteiraCreation(props) {
   async function createCarteira() {
     setLoading(true);
     newCarteira.id_usuario = props.usuario.id_usuario;
-    const result = await managerService.createCarteira(newCarteira);
-    if (result) {
-      setStatus("SUCESS");
+    if (newCarteira.nome !== "") {
+      await managerService.createCarteira(newCarteira).then((res) => {
+        if (res) {
+          setStatus("SUCESS");
+        } else {
+          setStatus("ERROR");
+        }
+      });
+      setNewCarteira({ nome: "", patrimonio: 0 });
+      await sleep(4000);
+      setLoading(false);
     } else {
       setStatus("ERROR");
+      await sleep(4000);
+      setLoading(false);
     }
-    setNewCarteira({ nome: "", patrimonio: 0 });
-    await sleep(4000);
-    setLoading(false);
   }
 
   return (

@@ -22,11 +22,17 @@ function FinancesInitial(props) {
       <CreationArea>
         <CreationSection>
           <AuxiliarText fontSize="28px">Adicione Carteiras</AuxiliarText>
-          <CarteiraCreation usuario={props.usuario}/>
+          <CarteiraCreation usuario={props.usuario} />
+          <AuxiliarText fontSize="28px">
+            Crie quantas carteiras quiser!
+          </AuxiliarText>
         </CreationSection>
         <CreationSection>
           <AuxiliarText fontSize="28px">Adicione Fundos</AuxiliarText>
-          <AuxiliarText >Começamos criando um fundo de Investimento Padrão, adicione seu valor:</AuxiliarText>
+          <AuxiliarText>
+            Começamos criando um fundo de Investimento Padrão, adicione seu
+            valor:
+          </AuxiliarText>
         </CreationSection>
       </CreationArea>
     </Body>
