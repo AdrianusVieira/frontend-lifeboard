@@ -26,6 +26,7 @@ function FundoCreation(props) {
       await managerService.createFundo(newFundo).then((res) => {
         if (res) {
           setStatus("SUCESS");
+          props.getPatrimony();
         } else {
           setStatus("ERROR");
         }

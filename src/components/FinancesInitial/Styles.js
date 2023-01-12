@@ -51,6 +51,7 @@ export const CreationSection = styled.div`
   padding: 1%;
 `;
 export const AuxiliarText = styled.text`
+text-align: center;
   color: #fffdf7;
   font-size: ${(props) => props.fontSize ?? "18px"};
   font-family: "VT323";

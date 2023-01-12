@@ -12,16 +12,16 @@ import {
   TitleSection,
 } from "./Styles";
 import * as managerService from "../../services/managerService";
+import { updateUsuarioByEmail } from "../../services/requesterService";
 
 function FinancesInitial(props) {
   async function calculatePatrimony() {
     var totalFundosPatrimony = 0;
     var totalCarteirasPatrimony = 0;
-
     await managerService
       .getCarteirasByUsuario(props.usuario.id_usuario)
       .then((res) => {
-        res.array.forEach((carteira) => {
+        res.forEach((carteira) => {
           totalCarteirasPatrimony =
             totalCarteirasPatrimony + carteira.patrimonio;
         });
@@ -29,17 +29,28 @@ function FinancesInitial(props) {
     await managerService
       .getFundosByUsuario(props.usuario.id_usuario)
       .then((res) => {
-        res.array.forEach((fundo) => {
+        res.forEach((fundo) => {
           totalFundosPatrimony = totalFundosPatrimony + fundo.patrimonio;
         });
       });
 
     const totalPatrimony = totalCarteirasPatrimony + totalFundosPatrimony;
-    console.log(
-      "🚀 ~ file: FinancesInitial.js:37 ~ calculatePatrimony ~ totalPatrimony",
-      totalPatrimony
-    );
+    await updateUsuarioByEmail(props.usuario.email, {
+      patrimonio_total: totalPatrimony,
+    });
+    props.getPatrimony()
   }
+  async function finalizeInitial() {
+    await calculatePatrimony();
+    const fundoInvestimento = {
+      nome: "Fundo para Investimentos",
+      patrimonio: 0,
+      id_usuario: props.usuario.id_usuario,
+    };
+    await managerService.createFundo(fundoInvestimento);
+    window.location.reload();
+  }
+
   return (
     <Body>
       <TitleSection>
@@ -55,7 +66,10 @@ function FinancesInitial(props) {
       <CreationArea>
         <CreationSection>
           <AuxiliarText fontSize="28px">Adicione Carteiras</AuxiliarText>
-          <CarteiraCreation usuario={props.usuario} />
+          <CarteiraCreation
+            getPatrimony={() => calculatePatrimony()}
+            usuario={props.usuario}
+          />
           <AuxiliarText fontSize="18px">
             Crie quantas carteiras quiser!
           </AuxiliarText>
@@ -66,7 +80,10 @@ function FinancesInitial(props) {
             Começamos criando um fundo de Investimento Padrão, adicione seu
             valor posteriormente na área de fundos.
           </AuxiliarText>
-          <FundoCreation usuario={props.usuario} />
+          <FundoCreation
+            getPatrimony={() => calculatePatrimony()}
+            usuario={props.usuario}
+          />
           <AuxiliarText fontSize="18px">
             Crie quantos Fundos quiser!
           </AuxiliarText>
@@ -74,12 +91,12 @@ function FinancesInitial(props) {
       </CreationArea>
       <Button
         onClick={() => {
-          calculatePatrimony();
+          finalizeInitial();
         }}
         width="40%"
         height="60px"
       >
-        Start
+        Finish
       </Button>
     </Body>
   );

@@ -33,6 +33,7 @@ function CarteiraCreation(props) {
       setNewCarteira({ nome: "", patrimonio: 0 });
       await sleep(4000);
       setLoading(false);
+      props.getPatrimony();
     } else {
       setStatus("ERROR");
       await sleep(4000);

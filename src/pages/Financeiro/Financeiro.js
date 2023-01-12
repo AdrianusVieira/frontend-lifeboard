@@ -21,6 +21,7 @@ function Financeiro() {
   const history = useHistory();
   const [usuario, setUsuario] = useState({});
   const [loading, setLoading] = useState(true);
+  const [isIniciating, setIsIniciating] = useState(false);
 
   async function getUsuario() {
     const email = getEmail();
@@ -29,6 +30,9 @@ function Financeiro() {
     setLoading(false);
     if (result) {
       setUsuario(result);
+      if (!result.patrimonio_total) {
+        setIsIniciating(true);
+      }
     } else {
       setUsuario("");
     }
@@ -37,6 +41,16 @@ function Financeiro() {
   useEffect(() => {
     getUsuario();
   }, []);
+
+  async function getPatrimony() {
+    const email = getEmail();
+    const result = await managerService.getUsuarioByEmail(email);
+    if (result) {
+      setUsuario(result);
+    } else {
+      setUsuario("");
+    }
+  }
 
   return (
     <Body>
@@ -94,12 +108,15 @@ function Financeiro() {
                 </AuxiliarText>
               </ReturnSection>
             </Box>
-            {usuario.patrimonio_total ? (
-              <></>
-            ) : (
+            {isIniciating ? (
               <>
-                <FinancesInitial usuario={usuario} />
+                <FinancesInitial
+                  usuario={usuario}
+                  getPatrimony={() => getPatrimony()}
+                />
               </>
+            ) : (
+              <></>
             )}
           </Base>
         </>
