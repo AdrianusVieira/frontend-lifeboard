@@ -9,6 +9,8 @@ export const deleteUsuarioByEmail = (email) => api.delete(`/usuario/${email}`);
 
 //carteira
 export const createCarteira = (carteira) => api.post("/carteira", carteira);
+export const getCarteirasByUsuario = (id) => api.get(`/carteira/${id}`);
 
 //fundo
 export const createFundo = (fundo) => api.post("/fundo", fundo);
+export const getFundosByUsuario = (id) => api.get(`/fundo/${id}`);

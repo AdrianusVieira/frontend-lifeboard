@@ -8,6 +8,7 @@ export const Body = styled.div`
   width: 100%;
   height: 100%;
   padding-top: 1%;
+  padding-bottom: 1%;
 `;
 export const TitleSection = styled.div`
   display: flex;
@@ -27,6 +28,7 @@ export const AuxiliarTitle = styled.text`
   font-size: 25px;
   font-family: "VT323";
   text-shadow: 1px 1px 1.5px #1e1e1e;
+  align-items: center;
 `;
 export const CreationArea = styled.div`
   display: flex;
