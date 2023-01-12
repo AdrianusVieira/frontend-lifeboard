@@ -1,0 +1,86 @@
+import React, { useState, useEffect } from "react";
+import { Body, CreationTitle, Box } from "./Styles";
+import { useHistory } from "react-router-dom";
+import Input from "../../Styles/Input";
+import StartButton from "../../Styles/StartButton";
+import LoadingFinances from "../LoadingFinances";
+import { sleep } from "../../utils/sleep";
+import * as managerService from "../../services/managerService";
+
+function CarteiraCreation(props) {
+  const history = useHistory();
+  const [newCarteira, setNewCarteira] = useState({
+    nome: "",
+    patrimonio: 0,
+  });
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("");
+
+  function fillingCarteiraData(e) {
+    const { value, name } = e.target;
+    setNewCarteira({ ...newCarteira, [name]: value });
+  }
+
+  async function createCarteira() {
+    setLoading(true);
+    newCarteira.id_usuario = props.usuario.id_usuario;
+    const result = await managerService.createCarteira(newCarteira);
+    if (result) {
+      setStatus("SUCESS");
+    } else {
+      setStatus("ERROR");
+    }
+    setNewCarteira({ nome: "", patrimonio: 0 });
+    await sleep(4000);
+    setLoading(false);
+  }
+
+  return (
+    <Body>
+      <Box>
+        {loading ? (
+          <>
+            <>
+              {status === "SUCESS" ? (
+                <>
+                  <CreationTitle>Carteira Criada com Sucesso!</CreationTitle>
+                </>
+              ) : (
+                <></>
+              )}
+              {status === "ERROR" ? (
+                <>
+                  <CreationTitle>Falha ao criar a carteira!</CreationTitle>
+                </>
+              ) : (
+                <></>
+              )}
+            </>
+            <LoadingFinances />
+          </>
+        ) : (
+          <>
+            <Input
+              name="nome"
+              width="60%"
+              placeholder="Nome Carteira:"
+              onChange={fillingCarteiraData}
+              value={newCarteira.nome}
+            />
+            <Input
+              name="patrimonio"
+              width="60%"
+              placeholder="Patrimonio da Carteira:"
+              onChange={fillingCarteiraData}
+              type="number"
+              value={newCarteira.patrimonio}
+            />
+            <StartButton onClick={() => createCarteira()}>Criar</StartButton>
+          </>
+        )}
+      </Box>
+    </Body>
+  );
+}
+
+export default CarteiraCreation;

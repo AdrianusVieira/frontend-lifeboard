@@ -1,4 +1,5 @@
 import React from "react";
+import CarteiraCreation from "../CarteiraCreation/CarteiraCreation";
 import {
     AuxiliarText,
   AuxiliarTitle,
@@ -21,6 +22,7 @@ function FinancesInitial(props) {
       <CreationArea>
         <CreationSection>
           <AuxiliarText fontSize="28px">Adicione Carteiras</AuxiliarText>
+          <CarteiraCreation usuario={props.usuario}/>
         </CreationSection>
         <CreationSection>
           <AuxiliarText fontSize="28px">Adicione Fundos</AuxiliarText>

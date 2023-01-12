@@ -18,7 +18,7 @@ export const getUsuarioByEmail = async (email) => {
       return res.data[0];
     })
     .catch((error) => console.warn(error));
-    
+
   return usuario;
 };
 
@@ -34,7 +34,8 @@ export const updateUsuarioByEmail = async (email, usuario) => {
 
 export const updateFotoUsuario = async (email, foto) => {
   const usuario = { foto: foto };
-  const newUsuario = await requesterService.updateUsuarioByEmail(email, usuario)
+  const newUsuario = await requesterService
+    .updateUsuarioByEmail(email, usuario)
     .then((res) => {
       return res.data;
     })
@@ -50,5 +51,16 @@ export const deleteUsuarioByEmail = async (email) => {
       return res.data;
     })
     .catch((error) => console.warn(error));
-  return result
+  return result;
+};
+
+//carteira
+export const createCarteira = async (carteira) => {
+  const newCarteira = await requesterService
+    .createCarteira(carteira)
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => console.warn(error));
+  return newCarteira;
 };
