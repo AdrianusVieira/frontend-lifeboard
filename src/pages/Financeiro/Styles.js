@@ -17,6 +17,7 @@ export const Base = styled.div`
   height: 100%;
   background-color: #e0c3f7;
   box-shadow: 0px 0px 4px #e0c3f7;
+  
 `;
 export const Box = styled.div`
   display: flex;
