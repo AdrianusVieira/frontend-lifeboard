@@ -154,13 +154,19 @@ function Financeiro() {
                 </ButtonSection>
                 {components === "CARTEIRAS" ? (
                   <>
-                    <Carteiras usuario={usuario} />
+                    <Carteiras
+                      usuario={usuario}
+                      getPatrimony={() => getPatrimony()}
+                    />
                   </>
                 ) : (
                   <>
                     {components === "FUNDOS" ? (
                       <>
-                        <Fundos usuario={usuario} />
+                        <Fundos
+                          usuario={usuario}
+                          getPatrimony={() => getPatrimony()}
+                        />
                       </>
                     ) : (
                       <>

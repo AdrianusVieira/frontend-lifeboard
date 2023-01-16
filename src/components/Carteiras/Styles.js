@@ -49,3 +49,15 @@ export const InputSection = styled.div`
   padding-top: 4%;
   padding-bottom: 4%;
 `;
+export const CreationSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+  height: 95%;
+  background-color: #5700d5;
+  border-radius: 16px;
+  box-shadow: 2px 2px 4px #1e1e1e, -1px -1px 4px #1e1e1e;
+  padding: 1%;
+`;

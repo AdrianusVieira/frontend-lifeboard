@@ -72,6 +72,7 @@ function CarteiraCreation(props) {
               placeholder="Nome Carteira:"
               onChange={fillingCarteiraData}
               value={newCarteira.nome}
+              marginTop="10px"
             />
             <Input
               name="patrimonio"
@@ -80,8 +81,11 @@ function CarteiraCreation(props) {
               onChange={fillingCarteiraData}
               type="number"
               value={newCarteira.patrimonio}
+              marginTop="10px"
             />
-            <StartButton onClick={() => createCarteira()}>Criar</StartButton>
+            <StartButton marginTop="10px" onClick={() => createCarteira()}>
+              Criar
+            </StartButton>
           </>
         )}
       </Box>

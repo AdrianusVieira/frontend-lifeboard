@@ -19,9 +19,8 @@ const InputAntd = styled(Input)`
     border-color: #00b4d8;
   }
   &::placeholder {
-    color: #5700d5;
+    color: ${(props) => props.color ?? "#fffdf7"};
   }
 `;
-
 
 export default InputAntd;

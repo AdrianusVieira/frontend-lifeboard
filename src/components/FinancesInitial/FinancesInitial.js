@@ -35,7 +35,7 @@ function FinancesInitial(props) {
       });
 
     const totalPatrimony = totalCarteirasPatrimony + totalFundosPatrimony;
-    await updateUsuarioByEmail(props.usuario.email, {
+    await managerService.updateUsuarioByEmail(props.usuario.email, {
       patrimonio_total: totalPatrimony,
     });
     props.getPatrimony()
