@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Body, ButtonSection, CarteiraView, InitialTitle, InputSection, CreationSection } from "./Styles";
+import {
+  Body,
+  ButtonSection,
+  CarteiraView,
+  InitialTitle,
+  InputSection,
+  CreationSection,
+} from "./Styles";
 import Input from "../../Styles/Input";
 import Button from "../../Styles/Button";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
@@ -9,7 +16,6 @@ import * as managerService from "../../services/managerService";
 function Carteiras(props) {
   const [carteiras, setCarteiras] = useState();
   const [components, setComponents] = useState("");
-
 
   async function getCarteiras() {
     const result = await managerService.getCarteirasByUsuario(
@@ -45,8 +51,9 @@ function Carteiras(props) {
       patrimonio_total: totalPatrimony,
     });
     props.getPatrimony();
-    setComponents("")
-    await getCarteiras()
+    await getCarteiras().then(() => {
+      setComponents("");
+    });
   }
 
   return (
@@ -54,7 +61,11 @@ function Carteiras(props) {
       <ButtonSection>
         <Button
           onClick={() => {
-            setComponents("ADD");
+            if (components === "ADD") {
+              setComponents("");
+            } else {
+              setComponents("ADD");
+            }
           }}
           width="30%"
           height="60px"
