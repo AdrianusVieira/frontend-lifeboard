@@ -163,7 +163,10 @@ function Fundos(props) {
             <>
               {components === "EDIT" ? (
                 <>
-                  <FundosEdit fundos={fundos} />
+                  <FundosEdit
+                    calculatePatrimony={() => calculatePatrimony()}
+                    fundos={fundos}
+                  />
                 </>
               ) : (
                 <>

@@ -11,6 +11,11 @@ function CarteirasEdit(props) {
     await managerService.updateCarteiraById(id, { nome: nome });
     window.location.reload();
   }
+  async function deleteCarteiraById(id) {
+    await managerService.deleteCarteiraById(id);
+    props.calculatePatrimony();
+    window.location.reload();
+  }
 
   return (
     <Body>
@@ -38,9 +43,9 @@ function CarteirasEdit(props) {
                 Editar
               </Button>
               <Button
-                // onClick={() => {
-                //   setComponents("FUNDOS");
-                // }}
+                onClick={() => {
+                  deleteCarteiraById(carteira.id_carteira);
+                }}
                 width="30%"
                 height="50px"
                 backgroundColor="#725AC1"

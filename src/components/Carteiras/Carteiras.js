@@ -163,7 +163,10 @@ function Carteiras(props) {
             <>
               {components === "EDIT" ? (
                 <>
-                  <CarteirasEdit carteiras={carteiras} />
+                  <CarteirasEdit
+                    calculatePatrimony={() => calculatePatrimony()}
+                    carteiras={carteiras}
+                  />
                 </>
               ) : (
                 <>

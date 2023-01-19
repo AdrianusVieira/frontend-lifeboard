@@ -11,6 +11,11 @@ function FundosEdit(props) {
     await managerService.updateFundoById(id, { nome: nome });
     window.location.reload();
   }
+  async function deleteFundoById(id) {
+    await managerService.deleteFundoById(id);
+    props.calculatePatrimony();
+    window.location.reload();
+  }
 
   return (
     <Body>
@@ -38,14 +43,14 @@ function FundosEdit(props) {
                 Editar
               </Button>
               <Button
-                // onClick={() => {
-                //   setComponents("FUNDOS");
-                // }}
+                onClick={() => {
+                  deleteFundoById(fundo.id_fundo);
+                }}
                 width="30%"
                 height="50px"
                 backgroundColor="#725AC1"
               >
-                Deletar Carteira
+                Deletar Fundo
               </Button>
             </FundoView>
           </>

@@ -84,6 +84,15 @@ export const updateCarteiraById = async (id, carteira) => {
 
   return newCarteira;
 };
+export const deleteCarteiraById = async (id) => {
+  const result = await requesterService
+    .deleteCarteiraById(id)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.warn(error));
+  return result;
+};
 
 //fundo
 export const createFundo = async (fundo) => {
@@ -114,6 +123,15 @@ export const updateFundoById = async (id, fundo) => {
     .catch((error) => console.warn(error));
 
   return newFundo;
+};
+export const deleteFundoById = async (id) => {
+  const result = await requesterService
+    .deleteFundoById(id)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.warn(error));
+  return result;
 };
 
 //movimentacao 
