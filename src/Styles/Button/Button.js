@@ -9,7 +9,7 @@ export const StartButton = styled.button`
   margin-top: ${(props) => props.marginTop ?? "0px"};
   width: ${(props) => props.width ?? "0px"};
   height: ${(props) => props.height ?? "0px"};
-  background-color: #5700d5;
+  background-color: ${(props) => props.backgroundColor ?? "#5700d5"};
   border-radius: 16px;
   padding: 10px;
   &:hover,

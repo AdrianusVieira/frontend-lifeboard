@@ -14,6 +14,7 @@ import { sleep } from "../../utils/sleep";
 import FundoCreation from "../FundoCreation";
 import LoadingFinances from "../LoadingFinances";
 import * as managerService from "../../services/managerService";
+import FundosEdit from "../FundosEdit";
 
 function Fundos(props) {
   const [fundos, setFundos] = useState();
@@ -125,6 +126,19 @@ function Fundos(props) {
           Adicionar Fundo
         </Button>
         <Button
+          onClick={() => {
+            if (components === "EDIT") {
+              setComponents("");
+            } else {
+              setComponents("EDIT");
+            }
+          }}
+          width="30%"
+          height="60px"
+        >
+          Editar Fundos
+        </Button>
+        <Button
           // onClick={() => {
           //   setComponents("FUNDOS");
           // }}
@@ -147,89 +161,97 @@ function Fundos(props) {
             <></>
           ) : (
             <>
-              {fundos?.map((fundo) => (
+              {components === "EDIT" ? (
                 <>
-                  <FundoView>
-                    <InitialTitle>{fundo.nome}</InitialTitle>
-                    <InitialTitle>
-                      R$ {fundo.patrimonio.toFixed(2)}
-                    </InitialTitle>
-                    {loading ? (
-                      <>
-                        <InputSection>
-                          <LoadingFinances />
-                        </InputSection>
-                      </>
-                    ) : (
-                      <>
-                        {" "}
-                        <InputSection>
-                          <Input
-                            name="descricao"
-                            width="80%"
-                            placeholder="Descrição:"
-                            borderColor="#5700D5"
-                            color="#5700D5"
-                            textAlign="center"
-                            value={newMovimentacao.descricao}
-                            onChange={fillingMovimentacaoValue}
-                          />
-                        </InputSection>
-                        <InputSection>
-                          <PlusOutlined
-                            style={{
-                              color: "#5700D5",
-                              fontSize: "20px",
-                              borderStyle: "solid",
-                              borderColor: "#5700D5",
-                              borderRadius: "50%",
-                              focus: {
-                                borderColor: "#745296",
-                              },
-                            }}
-                            onClick={() => {
-                              creatingMovimentacao("CREDIT", fundo);
-                            }}
-                          />
-                          <Input
-                            name="valor"
-                            width="40%"
-                            placeholder="Valor:"
-                            borderColor="#5700D5"
-                            color="#5700D5"
-                            textAlign="center"
-                            type="number"
-                            value={newMovimentacao.valor}
-                            onChange={fillingMovimentacaoValue}
-                          />
-                          <MinusOutlined
-                            style={{
-                              color: "#5700D5",
-                              fontSize: "20px",
-                              borderStyle: "solid",
-                              borderColor: "#5700D5",
-                              borderRadius: "50%",
-                            }}
-                            onClick={() => {
-                              creatingMovimentacao("DEBIT", fundo);
-                            }}
-                          />
-                        </InputSection>
-                      </>
-                    )}
-
-                    <Button
-                      // onClick={() => {
-                      //   setComponents("CARTEIRAS");
-                      // }}
-                      width="40%"
-                      height="50px"
-                    >
-                      Exibir Movimentações
-                    </Button>
-                  </FundoView>
+                  <FundosEdit fundos={fundos} />
                 </>
-              ))}
+              ) : (
+                <>
+                  {fundos?.map((fundo) => (
+                    <>
+                      <FundoView>
+                        <InitialTitle>{fundo.nome}</InitialTitle>
+                        <InitialTitle>
+                          R$ {fundo.patrimonio.toFixed(2)}
+                        </InitialTitle>
+                        {loading ? (
+                          <>
+                            <InputSection>
+                              <LoadingFinances />
+                            </InputSection>
+                          </>
+                        ) : (
+                          <>
+                            {" "}
+                            <InputSection>
+                              <Input
+                                name="descricao"
+                                width="80%"
+                                placeholder="Descrição:"
+                                borderColor="#5700D5"
+                                color="#5700D5"
+                                textAlign="center"
+                                value={newMovimentacao.descricao}
+                                onChange={fillingMovimentacaoValue}
+                              />
+                            </InputSection>
+                            <InputSection>
+                              <PlusOutlined
+                                style={{
+                                  color: "#5700D5",
+                                  fontSize: "20px",
+                                  borderStyle: "solid",
+                                  borderColor: "#5700D5",
+                                  borderRadius: "50%",
+                                  focus: {
+                                    borderColor: "#745296",
+                                  },
+                                }}
+                                onClick={() => {
+                                  creatingMovimentacao("CREDIT", fundo);
+                                }}
+                              />
+                              <Input
+                                name="valor"
+                                width="40%"
+                                placeholder="Valor:"
+                                borderColor="#5700D5"
+                                color="#5700D5"
+                                textAlign="center"
+                                type="number"
+                                value={newMovimentacao.valor}
+                                onChange={fillingMovimentacaoValue}
+                              />
+                              <MinusOutlined
+                                style={{
+                                  color: "#5700D5",
+                                  fontSize: "20px",
+                                  borderStyle: "solid",
+                                  borderColor: "#5700D5",
+                                  borderRadius: "50%",
+                                }}
+                                onClick={() => {
+                                  creatingMovimentacao("DEBIT", fundo);
+                                }}
+                              />
+                            </InputSection>
+                          </>
+                        )}
+
+                        <Button
+                          // onClick={() => {
+                          //   setComponents("CARTEIRAS");
+                          // }}
+                          width="40%"
+                          height="50px"
+                        >
+                          Exibir Movimentações
+                        </Button>
+                      </FundoView>
+                    </>
+                  ))}
+                </>
+              )}
             </>
           )}
         </>
