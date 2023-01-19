@@ -16,6 +16,13 @@ import * as managerService from "../../services/managerService";
 function Carteiras(props) {
   const [carteiras, setCarteiras] = useState();
   const [components, setComponents] = useState("");
+  const [newMovimentacao, setNewMovimentacao] = useState({
+    tipo: "",
+    data_hora: "",
+    descricao: "",
+    valor: 0,
+    id_carteira: "",
+  });
 
   async function getCarteiras() {
     const result = await managerService.getCarteirasByUsuario(
@@ -54,6 +61,19 @@ function Carteiras(props) {
     await getCarteiras().then(() => {
       setComponents("");
     });
+  }
+
+  function fillingMovimentacaoValue(e) {
+    const { value, name } = e.target;
+    setNewMovimentacao({ ...newMovimentacao, [name]: value });
+  }
+
+  async function creatingMovimentacao(tipo, carteira) {
+    newMovimentacao.tipo = tipo;
+    const data = new Date();
+    newMovimentacao.data_hora = data;
+    newMovimentacao.id_carteira = carteira.id_carteira;
+    await managerService.createMovimentacao(newMovimentacao);
   }
 
   return (
@@ -101,6 +121,17 @@ function Carteiras(props) {
                     <InitialTitle>{carteira.nome}</InitialTitle>
                     <InitialTitle>R$ {carteira.patrimonio}</InitialTitle>
                     <InputSection>
+                      <Input
+                        name="descricao"
+                        width="80%"
+                        placeholder="Descrição:"
+                        borderColor="#5700D5"
+                        color="#5700D5"
+                        textAlign="center"
+                        onChange={fillingMovimentacaoValue}
+                      />
+                    </InputSection>
+                    <InputSection>
                       <PlusOutlined
                         style={{
                           color: "#5700D5",
@@ -108,6 +139,12 @@ function Carteiras(props) {
                           borderStyle: "solid",
                           borderColor: "#5700D5",
                           borderRadius: "50%",
+                          focus: {
+                            borderColor: "#745296",
+                          },
+                        }}
+                        onClick={() => {
+                          creatingMovimentacao("CREDIT", carteira);
                         }}
                       />
                       <Input
@@ -118,7 +155,7 @@ function Carteiras(props) {
                         color="#5700D5"
                         textAlign="center"
                         type="number"
-                        // onChange={fillingUsuarioData}
+                        onChange={fillingMovimentacaoValue}
                       />
                       <MinusOutlined
                         style={{
@@ -127,6 +164,9 @@ function Carteiras(props) {
                           borderStyle: "solid",
                           borderColor: "#5700D5",
                           borderRadius: "50%",
+                        }}
+                        onClick={() => {
+                          creatingMovimentacao("DEBIT", carteira);
                         }}
                       />
                     </InputSection>

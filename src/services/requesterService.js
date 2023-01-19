@@ -14,3 +14,6 @@ export const getCarteirasByUsuario = (id) => api.get(`/carteira/${id}`);
 //fundo
 export const createFundo = (fundo) => api.post("/fundo", fundo);
 export const getFundosByUsuario = (id) => api.get(`/fundo/${id}`);
+
+//movimentacoes
+export const createMovimentacao = (movimentacao) => api.post("/movimentacao", movimentacao);

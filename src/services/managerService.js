@@ -95,3 +95,14 @@ export const getFundosByUsuario = async (id) => {
 
   return fundos;
 };
+
+//movimentacao 
+export const createMovimentacao = async (movimentacao) => {
+  const newMovimentacao = await requesterService
+    .createMovimentacao(movimentacao)
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => console.warn(error));
+  return newMovimentacao;
+};
