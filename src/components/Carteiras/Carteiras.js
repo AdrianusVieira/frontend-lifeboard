@@ -12,15 +12,18 @@ import Button from "../../Styles/Button";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import CarteiraCreation from "../CarteiraCreation/CarteiraCreation";
 import * as managerService from "../../services/managerService";
+import { sleep } from "../../utils/sleep";
+import LoadingFinances from "../LoadingFinances";
 
 function Carteiras(props) {
   const [carteiras, setCarteiras] = useState();
   const [components, setComponents] = useState("");
+  const [loading, setLoading] = useState(false);
   const [newMovimentacao, setNewMovimentacao] = useState({
     tipo: "",
     data_hora: "",
     descricao: "",
-    valor: 0,
+    valor: "",
     id_carteira: "",
   });
 
@@ -69,11 +72,40 @@ function Carteiras(props) {
   }
 
   async function creatingMovimentacao(tipo, carteira) {
+    setLoading(true);
     newMovimentacao.tipo = tipo;
     const data = new Date();
     newMovimentacao.data_hora = data;
     newMovimentacao.id_carteira = carteira.id_carteira;
     await managerService.createMovimentacao(newMovimentacao);
+    var newPatrimonio_Total;
+    var newPatrimonioCarteira;
+    if (tipo === "DEBIT") {
+      newPatrimonio_Total =
+        props.usuario.patrimonio_total - newMovimentacao.valor;
+      newPatrimonioCarteira = carteira.patrimonio - newMovimentacao.valor;
+    } else if (tipo === "CREDIT") {
+      newPatrimonio_Total =
+        +props.usuario.patrimonio_total + +newMovimentacao.valor;
+      newPatrimonioCarteira = +carteira.patrimonio + +newMovimentacao.valor;
+    }
+    await managerService.updateUsuarioByEmail(props.usuario.email, {
+      patrimonio_total: newPatrimonio_Total,
+    });
+    await managerService.updateCarteiraById(carteira.id_carteira, {
+      patrimonio: newPatrimonioCarteira,
+    });
+    carteira.patrimonio = newPatrimonioCarteira;
+    props.getPatrimony();
+    setNewMovimentacao({
+      tipo: "",
+      data_hora: "",
+      descricao: "",
+      valor: "",
+      id_carteira: "",
+    });
+    await sleep(1500);
+    setLoading(false);
   }
 
   return (
@@ -119,57 +151,73 @@ function Carteiras(props) {
                 <>
                   <CarteiraView>
                     <InitialTitle>{carteira.nome}</InitialTitle>
-                    <InitialTitle>R$ {carteira.patrimonio}</InitialTitle>
-                    <InputSection>
-                      <Input
-                        name="descricao"
-                        width="80%"
-                        placeholder="Descrição:"
-                        borderColor="#5700D5"
-                        color="#5700D5"
-                        textAlign="center"
-                        onChange={fillingMovimentacaoValue}
-                      />
-                    </InputSection>
-                    <InputSection>
-                      <PlusOutlined
-                        style={{
-                          color: "#5700D5",
-                          fontSize: "20px",
-                          borderStyle: "solid",
-                          borderColor: "#5700D5",
-                          borderRadius: "50%",
-                          focus: {
-                            borderColor: "#745296",
-                          },
-                        }}
-                        onClick={() => {
-                          creatingMovimentacao("CREDIT", carteira);
-                        }}
-                      />
-                      <Input
-                        name="valor"
-                        width="40%"
-                        placeholder="Valor:"
-                        borderColor="#5700D5"
-                        color="#5700D5"
-                        textAlign="center"
-                        type="number"
-                        onChange={fillingMovimentacaoValue}
-                      />
-                      <MinusOutlined
-                        style={{
-                          color: "#5700D5",
-                          fontSize: "20px",
-                          borderStyle: "solid",
-                          borderColor: "#5700D5",
-                          borderRadius: "50%",
-                        }}
-                        onClick={() => {
-                          creatingMovimentacao("DEBIT", carteira);
-                        }}
-                      />
-                    </InputSection>
+                    <InitialTitle>
+                      R$ {carteira.patrimonio.toFixed(2)}
+                    </InitialTitle>
+                    {loading ? (
+                      <>
+                        <InputSection>
+                          <LoadingFinances />
+                        </InputSection>
+                      </>
+                    ) : (
+                      <>
+                        {" "}
+                        <InputSection>
+                          <Input
+                            name="descricao"
+                            width="80%"
+                            placeholder="Descrição:"
+                            borderColor="#5700D5"
+                            color="#5700D5"
+                            textAlign="center"
+                            value={newMovimentacao.descricao}
+                            onChange={fillingMovimentacaoValue}
+                          />
+                        </InputSection>
+                        <InputSection>
+                          <PlusOutlined
+                            style={{
+                              color: "#5700D5",
+                              fontSize: "20px",
+                              borderStyle: "solid",
+                              borderColor: "#5700D5",
+                              borderRadius: "50%",
+                              focus: {
+                                borderColor: "#745296",
+                              },
+                            }}
+                            onClick={() => {
+                              creatingMovimentacao("CREDIT", carteira);
+                            }}
+                          />
+                          <Input
+                            name="valor"
+                            width="40%"
+                            placeholder="Valor:"
+                            borderColor="#5700D5"
+                            color="#5700D5"
+                            textAlign="center"
+                            type="number"
+                            value={newMovimentacao.valor}
+                            onChange={fillingMovimentacaoValue}
+                          />
+                          <MinusOutlined
+                            style={{
+                              color: "#5700D5",
+                              fontSize: "20px",
+                              borderStyle: "solid",
+                              borderColor: "#5700D5",
+                              borderRadius: "50%",
+                            }}
+                            onClick={() => {
+                              creatingMovimentacao("DEBIT", carteira);
+                            }}
+                          />
+                        </InputSection>
+                      </>
+                    )}
+
                     <Button
                       // onClick={() => {
                       //   setComponents("CARTEIRAS");

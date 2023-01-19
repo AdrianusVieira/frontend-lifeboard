@@ -90,7 +90,9 @@ function Financeiro() {
               <PatrimonySection>
                 {usuario.patrimonio_total ? (
                   <>
-                    <PatrimonyText>R$ {usuario.patrimonio_total}</PatrimonyText>
+                    <PatrimonyText>
+                      R$ {usuario.patrimonio_total.toFixed(2)}
+                    </PatrimonyText>
                   </>
                 ) : (
                   <>

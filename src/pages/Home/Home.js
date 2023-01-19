@@ -182,7 +182,7 @@ function Home() {
                                   history.push("/financeiro");
                                 }}
                               >
-                                R$ {usuario.patrimonio_total}
+                                R$ {usuario.patrimonio_total.toFixed(2)}
                               </PatrimonyCircle>
                             </>
                           ) : (

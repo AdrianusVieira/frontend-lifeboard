@@ -74,6 +74,16 @@ export const getCarteirasByUsuario = async (id) => {
 
   return carteiras;
 };
+export const updateCarteiraById = async (id, carteira) => {
+  const newCarteira = await requesterService
+    .updateCarteiraById(id, carteira)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.warn(error));
+
+  return newCarteira;
+};
 
 //fundo
 export const createFundo = async (fundo) => {
@@ -94,6 +104,16 @@ export const getFundosByUsuario = async (id) => {
     .catch((error) => console.warn(error));
 
   return fundos;
+};
+export const updateFundoById = async (id, fundo) => {
+  const newFundo = await requesterService
+    .updateFundoById(id, fundo)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.warn(error));
+
+  return newFundo;
 };
 
 //movimentacao 
