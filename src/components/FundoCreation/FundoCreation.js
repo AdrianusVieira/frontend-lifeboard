@@ -34,6 +34,7 @@ function FundoCreation(props) {
       setNewFundo({ nome: "", patrimonio: 0 });
       await sleep(4000);
       setLoading(false);
+      props.getPatrimony();
     } else {
       setStatus("ERROR");
       await sleep(4000);
@@ -72,6 +73,7 @@ function FundoCreation(props) {
               placeholder="Nome Fundo:"
               onChange={fillingFundoData}
               value={newFundo.nome}
+              marginTop="10px"
             />
             <Input
               name="patrimonio"
@@ -79,9 +81,10 @@ function FundoCreation(props) {
               placeholder="Patrimonio do Fundo:"
               onChange={fillingFundoData}
               type="number"
+              marginTop="10px"
               value={newFundo.patrimonio}
             />
-            <StartButton onClick={() => createFundo()}>Criar</StartButton>
+            <StartButton marginTop="10px" onClick={() => createFundo()}>Criar</StartButton>
           </>
         )}
       </Box>
