@@ -174,3 +174,42 @@ export const getMovimentacoesByInvestimento = async (id) => {
 
   return movimentacoes;
 };
+//investimento
+export const createInvestimento = async (investimento) => {
+  const newInvestimento = await requesterService
+    .createInvestimento(investimento)
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => console.warn(error));
+  return newInvestimento;
+};
+export const getInvestimentosByCategoria = async (categoria) => {
+  const investimentos = await requesterService
+    .getInvestimentosByCategoria(categoria)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.warn(error));
+
+  return investimentos;
+};
+export const updateInvestimentoById = async (id, investimento) => {
+  const newInvestimento = await requesterService
+    .updateInvestimentoById(id, investimento)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.warn(error));
+
+  return newInvestimento;
+};
+export const deleteInvestimentoById = async (id) => {
+  const result = await requesterService
+    .deleteInvestimentoById(id)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.warn(error));
+  return result;
+};
