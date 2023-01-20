@@ -19,43 +19,47 @@ function FundosEdit(props) {
 
   return (
     <Body>
-      <Box>
         {props.fundos?.map((fundo) => (
           <>
-            <FundoView>
-              <Input
-                name="nome"
-                width="30%"
-                placeholder={fundo.nome}
-                borderColor="#5700D5"
-                color="#5700D5"
-                textAlign="center"
-                onChange={(e) => setNome(e.target.value)}
-              />
-              <Button
-                onClick={() => {
-                  updateFundoById(fundo.id_fundo);
-                }}
-                width="30%"
-                backgroundColor="#725AC1"
-                height="50px"
-              >
-                Editar
-              </Button>
-              <Button
-                onClick={() => {
-                  deleteFundoById(fundo.id_fundo);
-                }}
-                width="30%"
-                height="50px"
-                backgroundColor="#725AC1"
-              >
-                Deletar Fundo
-              </Button>
-            </FundoView>
+            {fundo.nome !== "Fundo para Investimentos" ? (
+              <>
+                <FundoView>
+                  <Input
+                    name="nome"
+                    width="30%"
+                    placeholder={fundo.nome}
+                    borderColor="#5700D5"
+                    color="#5700D5"
+                    textAlign="center"
+                    onChange={(e) => setNome(e.target.value)}
+                  />
+                  <Button
+                    onClick={() => {
+                      updateFundoById(fundo.id_fundo);
+                    }}
+                    width="30%"
+                    backgroundColor="#725AC1"
+                    height="50px"
+                  >
+                    Editar
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      deleteFundoById(fundo.id_fundo);
+                    }}
+                    width="30%"
+                    height="50px"
+                    backgroundColor="#725AC1"
+                  >
+                    Deletar Fundo
+                  </Button>
+                </FundoView>
+              </>
+            ) : (
+              <></>
+            )}
           </>
         ))}
-      </Box>
     </Body>
   );
 }

@@ -3,19 +3,12 @@ import styled from "styled-components";
 export const Body = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
-  height: 100%;
-`;
-export const Box = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 100%;
-  height: 60%;
+  padding-top: 1%;
   overflow: auto;
+  padding-bottom: 1%;
 `;
 export const FundoView = styled.div`
   display: flex;
