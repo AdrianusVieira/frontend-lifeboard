@@ -15,6 +15,7 @@ import * as managerService from "../../services/managerService";
 import { sleep } from "../../utils/sleep";
 import LoadingFinances from "../LoadingFinances";
 import CarteirasEdit from "../CarteirasEdit";
+import Movimentacoes from "../Movimentacoes/Movimentacoes";
 
 function Carteiras(props) {
   const [carteiras, setCarteiras] = useState();
@@ -27,6 +28,7 @@ function Carteiras(props) {
     valor: "",
     id_carteira: "",
   });
+  const [id, setId] = useState("");
 
   async function getCarteiras() {
     const result = await managerService.getCarteirasByUsuario(
@@ -76,6 +78,7 @@ function Carteiras(props) {
     setLoading(true);
     newMovimentacao.tipo = tipo;
     const data = new Date();
+    data.setHours(data.getHours() - 3);
     newMovimentacao.data_hora = data;
     newMovimentacao.id_carteira = carteira.id_carteira;
     await managerService.createMovimentacao(newMovimentacao);
@@ -111,43 +114,49 @@ function Carteiras(props) {
 
   return (
     <Body>
-      <ButtonSection>
-        <Button
-          onClick={() => {
-            if (components === "ADD") {
-              setComponents("");
-            } else {
-              setComponents("ADD");
-            }
-          }}
-          width="30%"
-          height="60px"
-        >
-          Adicionar Carteira
-        </Button>
-        <Button
-          onClick={() => {
-            if (components === "EDIT") {
-              setComponents("");
-            } else {
-              setComponents("EDIT");
-            }
-          }}
-          width="30%"
-          height="60px"
-        >
-          Editar Carteiras
-        </Button>
-        <Button
-          // onClick={() => {
-          //   setComponents("FUNDOS");
-          // }}
-          width="30%"
-          height="60px"
-        >
-          Exibir Relatórios
-        </Button>
-      </ButtonSection>
+      {components !== "MOVI" ? (
+        <>
+          <ButtonSection>
+            <Button
+              onClick={() => {
+                if (components === "ADD") {
+                  setComponents("");
+                } else {
+                  setComponents("ADD");
+                }
+              }}
+              width="30%"
+              height="60px"
+            >
+              Adicionar Carteira
+            </Button>
+            <Button
+              onClick={() => {
+                if (components === "EDIT") {
+                  setComponents("");
+                } else {
+                  setComponents("EDIT");
+                }
+              }}
+              width="30%"
+              height="60px"
+            >
+              Editar Carteiras
+            </Button>
+            <Button
+              // onClick={() => {
+              //   setComponents("FUNDOS");
+              // }}
+              width="30%"
+              height="60px"
+            >
+              Exibir Relatórios
+            </Button>
+          </ButtonSection>
+        </>
+      ) : (
+        <></>
+      )}
       {components === "ADD" ? (
         <CreationSection>
           <CarteiraCreation
@@ -170,89 +179,101 @@ function Carteiras(props) {
                 </>
               ) : (
                 <>
-                  {carteiras?.map((carteira) => (
+                  {components === "MOVI" ? (
                     <>
-                      <CarteiraView>
-                        <InitialTitle>{carteira.nome}</InitialTitle>
-                        <InitialTitle>
-                          R$ {carteira.patrimonio.toFixed(2)}
-                        </InitialTitle>
-                        {loading ? (
-                          <>
-                            <InputSection>
-                              <LoadingFinances />
-                            </InputSection>
-                          </>
-                        ) : (
-                          <>
-                            {" "}
-                            <InputSection>
-                              <Input
-                                name="descricao"
-                                width="80%"
-                                placeholder="Descrição:"
-                                borderColor="#5700D5"
-                                color="#5700D5"
-                                textAlign="center"
-                                value={newMovimentacao.descricao}
-                                onChange={fillingMovimentacaoValue}
-                              />
-                            </InputSection>
-                            <InputSection>
-                              <PlusOutlined
-                                style={{
-                                  color: "#5700D5",
-                                  fontSize: "20px",
-                                  borderStyle: "solid",
-                                  borderColor: "#5700D5",
-                                  borderRadius: "50%",
-                                  focus: {
-                                    borderColor: "#745296",
-                                  },
-                                }}
-                                onClick={() => {
-                                  creatingMovimentacao("CREDIT", carteira);
-                                }}
-                              />
-                              <Input
-                                name="valor"
-                                width="40%"
-                                placeholder="Valor:"
-                                borderColor="#5700D5"
-                                color="#5700D5"
-                                textAlign="center"
-                                type="number"
-                                value={newMovimentacao.valor}
-                                onChange={fillingMovimentacaoValue}
-                              />
-                              <MinusOutlined
-                                style={{
-                                  color: "#5700D5",
-                                  fontSize: "20px",
-                                  borderStyle: "solid",
-                                  borderColor: "#5700D5",
-                                  borderRadius: "50%",
-                                }}
-                                onClick={() => {
-                                  creatingMovimentacao("DEBIT", carteira);
-                                }}
-                              />
-                            </InputSection>
-                          </>
-                        )}
-
-                        <Button
-                          // onClick={() => {
-                          //   setComponents("CARTEIRAS");
-                          // }}
-                          width="40%"
-                          height="50px"
-                        >
-                          Exibir Movimentações
-                        </Button>
-                      </CarteiraView>
+                      <Movimentacoes
+                        carteira={id}
+                        close={() => setComponents("")}
+                      />
                     </>
-                  ))}
+                  ) : (
+                    <>
+                      {carteiras?.map((carteira) => (
+                        <>
+                          <CarteiraView>
+                            <InitialTitle>{carteira.nome}</InitialTitle>
+                            <InitialTitle>
+                              R$ {carteira.patrimonio.toFixed(2)}
+                            </InitialTitle>
+                            {loading ? (
+                              <>
+                                <InputSection>
+                                  <LoadingFinances />
+                                </InputSection>
+                              </>
+                            ) : (
+                              <>
+                                {" "}
+                                <InputSection>
+                                  <Input
+                                    name="descricao"
+                                    width="80%"
+                                    placeholder="Descrição:"
+                                    borderColor="#5700D5"
+                                    color="#5700D5"
+                                    textAlign="center"
+                                    value={newMovimentacao.descricao}
+                                    onChange={fillingMovimentacaoValue}
+                                  />
+                                </InputSection>
+                                <InputSection>
+                                  <PlusOutlined
+                                    style={{
+                                      color: "#5700D5",
+                                      fontSize: "20px",
+                                      borderStyle: "solid",
+                                      borderColor: "#5700D5",
+                                      borderRadius: "50%",
+                                      focus: {
+                                        borderColor: "#745296",
+                                      },
+                                    }}
+                                    onClick={() => {
+                                      creatingMovimentacao("CREDIT", carteira);
+                                    }}
+                                  />
+                                  <Input
+                                    name="valor"
+                                    width="40%"
+                                    placeholder="Valor:"
+                                    borderColor="#5700D5"
+                                    color="#5700D5"
+                                    textAlign="center"
+                                    type="number"
+                                    value={newMovimentacao.valor}
+                                    onChange={fillingMovimentacaoValue}
+                                  />
+                                  <MinusOutlined
+                                    style={{
+                                      color: "#5700D5",
+                                      fontSize: "20px",
+                                      borderStyle: "solid",
+                                      borderColor: "#5700D5",
+                                      borderRadius: "50%",
+                                    }}
+                                    onClick={() => {
+                                      creatingMovimentacao("DEBIT", carteira);
+                                    }}
+                                  />
+                                </InputSection>
+                              </>
+                            )}
+
+                            <Button
+                              onClick={() => {
+                                setComponents("MOVI");
+                                setId(carteira.id_carteira);
+                              }}
+                              width="40%"
+                              height="50px"
+                            >
+                              Exibir Movimentações
+                            </Button>
+                          </CarteiraView>
+                        </>
+                      ))}
+                    </>
+                  )}
                 </>
               )}
             </>

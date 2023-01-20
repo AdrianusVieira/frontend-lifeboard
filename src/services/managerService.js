@@ -144,3 +144,33 @@ export const createMovimentacao = async (movimentacao) => {
     .catch((error) => console.warn(error));
   return newMovimentacao;
 };
+export const getMovimentacoesByCarteira = async (id) => {
+  const movimentacoes = await requesterService
+    .getMovimentacoesByCarteira(id)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.warn(error));
+
+  return movimentacoes;
+};
+export const getMovimentacoesByFundo = async (id) => {
+  const movimentacoes = await requesterService
+    .getMovimentacoesByFundo(id)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.warn(error));
+
+  return movimentacoes;
+};
+export const getMovimentacoesByInvestimento = async (id) => {
+  const movimentacoes = await requesterService
+    .getMovimentacoesByInvestimento(id)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.warn(error));
+
+  return movimentacoes;
+};

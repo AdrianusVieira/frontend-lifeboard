@@ -16,8 +16,14 @@ export const deleteCarteiraById = (id) => api.delete(`/carteira/${id}`);
 //fundo
 export const createFundo = (fundo) => api.post("/fundo", fundo);
 export const getFundosByUsuario = (id) => api.get(`/fundo/${id}`);
-export const updateFundoById = (id, fundo) =>
-  api.put(`/fundo/${id}`, fundo);
+export const updateFundoById = (id, fundo) => api.put(`/fundo/${id}`, fundo);
 export const deleteFundoById = (id) => api.delete(`/fundo/${id}`);
 //movimentacoes
-export const createMovimentacao = (movimentacao) => api.post("/movimentacao", movimentacao);
+export const createMovimentacao = (movimentacao) =>
+  api.post("/movimentacao", movimentacao);
+export const getMovimentacoesByCarteira = (id_carteira) =>
+  api.get(`/movimentacaocarteira/${id_carteira}`);
+export const getMovimentacoesByFundo = (id_fundo) =>
+  api.get(`/movimentacaofundo/${id_fundo}`);
+export const getMovimentacoesByInvestimento = (id_investimento) =>
+  api.get(`/movimentacaoinvestimento/${id_investimento}`);

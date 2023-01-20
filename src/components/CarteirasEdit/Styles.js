@@ -15,6 +15,7 @@ export const Box = styled.div`
   align-items: center;
   width: 100%;
   height: 60%;
+  overflow: auto;
 `;
 export const CarteiraView = styled.div`
   display: flex;
