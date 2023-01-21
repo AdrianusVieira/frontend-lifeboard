@@ -12,7 +12,6 @@ import {
   TitleSection,
 } from "./Styles";
 import * as managerService from "../../services/managerService";
-import { updateUsuarioByEmail } from "../../services/requesterService";
 
 function FinancesInitial(props) {
   async function calculatePatrimony() {
@@ -38,7 +37,8 @@ function FinancesInitial(props) {
     await managerService.updateUsuarioByEmail(props.usuario.email, {
       patrimonio_total: totalPatrimony,
     });
-    props.getPatrimony()
+    props.usuario.patrimonio_total = totalPatrimony;
+    props.getPatrimony();
   }
   async function finalizeInitial() {
     await calculatePatrimony();
@@ -47,7 +47,10 @@ function FinancesInitial(props) {
       patrimonio: 0,
       id_usuario: props.usuario.id_usuario,
     };
-    await managerService.createFundo(fundoInvestimento);
+    if (props.usuario.patrimonio_total !== 0) {
+      await managerService.createFundo(fundoInvestimento);
+    }
+
     window.location.reload();
   }
 

@@ -194,6 +194,16 @@ export const getInvestimentosByCategoria = async (categoria) => {
 
   return investimentos;
 };
+export const getInvestimentosByUsuario = async (id) => {
+  const investimentos = await requesterService
+    .getInvestimentosByUsuario(id)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.warn(error));
+
+  return investimentos;
+};
 export const updateInvestimentoById = async (id, investimento) => {
   const newInvestimento = await requesterService
     .updateInvestimentoById(id, investimento)

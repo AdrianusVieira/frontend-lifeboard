@@ -28,8 +28,12 @@ export const getMovimentacoesByFundo = (id_fundo) =>
 export const getMovimentacoesByInvestimento = (id_investimento) =>
   api.get(`/movimentacaoinvestimento/${id_investimento}`);
 //investimentos
-export const createInvestimento = (investimento) => api.post("/investimento", investimento);
-export const getInvestimentosByCategoria = (categoria) => api.get(`/investimento/${categoria}`);
+export const createInvestimento = (investimento) =>
+  api.post("/investimento", investimento);
+export const getInvestimentosByCategoria = (categoria) =>
+  api.get(`/investimentocategoria/${categoria}`);
+export const getInvestimentosByUsuario = (id) =>
+  api.get(`/investimentousuario/${id}`);
 export const updateInvestimentoById = (id, investimento) =>
   api.put(`/investimento/${id}`, investimento);
 export const deleteInvestimentoById = (id) => api.delete(`/investimento/${id}`);

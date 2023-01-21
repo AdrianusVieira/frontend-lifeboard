@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Body, CreationTitle, Box } from "./Styles";
 import Input from "../../Styles/Input";
 import StartButton from "../../Styles/StartButton";
@@ -17,11 +17,34 @@ function InvestimentoCreation(props) {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
   const [categoria, setCategoria] = useState("");
+  const [restValue, setRestValue] = useState("");
 
   function fillingInvestimentoData(e) {
     const { value, name } = e.target;
     setNewInvestimento({ ...newInvestimento, [name]: value });
   }
+  async function calculateDisponiblePatrimony() {
+    const aux = await managerService.getInvestimentosByUsuario(
+      props.usuario.id_usuario
+    );
+    var utilTotal = 0;
+    aux.forEach((investimento) => {
+      utilTotal = utilTotal + investimento.patrimonio;
+    });
+    const fundos = await managerService.getFundosByUsuario(
+      props.usuario.id_usuario
+    );
+    var patrimonioInvestimento = 0;
+    fundos.forEach((fundo) => {
+      if ((fundo.nome = "Fundo para Investimentos")) {
+        patrimonioInvestimento = fundo.patrimonio;
+      }
+    });
+    setRestValue(patrimonioInvestimento - utilTotal);
+  }
+  useEffect(() => {
+    calculateDisponiblePatrimony();
+  }, []);
 
   async function createInvestimento() {
     setLoading(true);
@@ -29,7 +52,8 @@ function InvestimentoCreation(props) {
     newInvestimento.categoria = categoria;
     if (
       newInvestimento.nome !== "" &&
-      newInvestimento.categoria !== "Categoria:"
+      newInvestimento.categoria !== "Categoria:" &&
+      restValue - newInvestimento.patrimonio >= 0
     ) {
       await managerService.createInvestimento(newInvestimento).then((res) => {
         if (res) {
@@ -40,6 +64,7 @@ function InvestimentoCreation(props) {
       });
       setNewInvestimento({ nome: "", patrimonio: 0, categoria: "Categoria:" });
       await sleep(4000);
+      calculateDisponiblePatrimony()
       setLoading(false);
     } else {
       setStatus("ERROR");
@@ -75,6 +100,7 @@ function InvestimentoCreation(props) {
           </>
         ) : (
           <>
+          <CreationTitle>Sua alocação disponível: {restValue}</CreationTitle>
             <Input
               name="nome"
               width="60%"
