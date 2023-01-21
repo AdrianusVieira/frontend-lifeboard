@@ -3,19 +3,20 @@ import { Body, ButtonSection, CreationSection } from "./Styles";
 import Button from "../../Styles/Button";
 import * as managerService from "../../services/managerService";
 import InvestimentoCreation from "../InvestimentoCreation";
+import InvestimentosEdit from "../InvestimentosEdit";
 
 function Investimentos(props) {
   const [investimentos, setInvestimentos] = useState();
   const [components, setComponents] = useState("");
-  // async function getFundos() {
-  //   const result = await managerService.getFundosByUsuario(
-  //     props.usuario.id_usuario
-  //   );
-  //   setFundos(result);
-  // }
-  // useEffect(() => {
-  //   getFundos();
-  // }, []);
+  async function getInvestimentos() {
+    const result = await managerService.getInvestimentosByUsuario(
+      props.usuario.id_usuario
+    );
+    setInvestimentos(result);
+  }
+  useEffect(() => {
+    getInvestimentos();
+  }, []);
 
   return (
     <Body>
@@ -108,7 +109,15 @@ function Investimentos(props) {
           <InvestimentoCreation usuario={props.usuario} />
         </CreationSection>
       ) : (
-        <></>
+        <>
+          {components === "EDIT" ? (
+            <>
+              <InvestimentosEdit investimentos={investimentos}/>
+            </>
+          ) : (
+            <></>
+          )}
+        </>
       )}
     </Body>
   );
