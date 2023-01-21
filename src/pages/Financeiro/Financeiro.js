@@ -174,7 +174,10 @@ function Financeiro() {
                       <>
                         {components === "INVESTIMENTOS" ? (
                           <>
-                            <Investimentos usuario={usuario} />
+                            <Investimentos
+                              usuario={usuario}
+                              getPatrimony={() => getPatrimony()}
+                            />
                           </>
                         ) : (
                           <></>

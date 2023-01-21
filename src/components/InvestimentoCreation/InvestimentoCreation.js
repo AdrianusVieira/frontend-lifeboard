@@ -64,7 +64,7 @@ function InvestimentoCreation(props) {
       });
       setNewInvestimento({ nome: "", patrimonio: 0, categoria: "Categoria:" });
       await sleep(4000);
-      calculateDisponiblePatrimony()
+      calculateDisponiblePatrimony();
       setLoading(false);
     } else {
       setStatus("ERROR");
@@ -100,7 +100,7 @@ function InvestimentoCreation(props) {
           </>
         ) : (
           <>
-          <CreationTitle>Sua alocação disponível: {restValue}</CreationTitle>
+            <CreationTitle>Sua alocação disponível: {restValue}</CreationTitle>
             <Input
               name="nome"
               width="60%"
@@ -124,7 +124,6 @@ function InvestimentoCreation(props) {
                 borderWidth: "3px",
                 marginTop: "10px",
               }}
-              name="categoria"
               onChange={(e) => setCategoria(e)}
               options={[
                 { value: "previdenciaprivada", label: "Previdencia Privada" },

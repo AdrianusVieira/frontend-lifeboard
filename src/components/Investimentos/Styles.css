@@ -1,0 +1,11 @@
+.ant-select-selector {
+  background-color: #e0c3f7 !important;
+  text-align: left !important;
+  border-color: #5700d5 !important;
+  color: #5700d5 !important;
+  font-size: 18px !important;
+  font-family: "VT323" !important;
+  height: 30px !important;
+  border-radius: 8px !important;
+  border-width: 3px !important;
+}
