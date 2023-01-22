@@ -20,20 +20,16 @@ function Movimentacoes(props) {
     } else if (props.fundo) {
       const result = await managerService.getMovimentacoesByFundo(props.fundo);
       setMovimentacoes(result.reverse());
+    } else if (props.investimento) {
+      const result = await managerService.getMovimentacoesByInvestimento(
+        props.investimento
+      );
+      setMovimentacoes(result.reverse());
     }
-
-    
   }
   useEffect(() => {
     getMovimentacoes();
   }, []);
-
-  async function formatarData() {
-    for (var i = 0; i < movimentacoes.length; i++) {
-      var data_formatada = new Date(movimentacoes[i].data_hora);
-      movimentacoes[i].data_hora = data_formatada;
-    }
-  }
 
   return (
     <Body>
@@ -49,15 +45,17 @@ function Movimentacoes(props) {
       {movimentacoes?.map((movimentacao) => (
         <MovimentacaoView>
           <InitialTitle>{movimentacao.descricao}</InitialTitle>
-          {movimentacao.tipo === "CREDIT" ? (
-            <>
-              <InitialTitle>R$ {movimentacao.valor}</InitialTitle>
-            </>
-          ) : (
-            <>
-              <InitialTitle>R$ -{movimentacao.valor}</InitialTitle>
-            </>
-          )}
+          <>
+            {movimentacao.tipo === "DEBIT" ? (
+              <>
+                <InitialTitle>R$ -{movimentacao.valor}</InitialTitle>
+              </>
+            ) : (
+              <>
+                <InitialTitle>R$ {movimentacao.valor}</InitialTitle>
+              </>
+            )}
+          </>
           <InitialTitle>
             {movimentacao.data_hora.slice(8, 10) +
               "/" +

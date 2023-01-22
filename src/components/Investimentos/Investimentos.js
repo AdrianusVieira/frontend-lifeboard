@@ -20,6 +20,7 @@ import Input from "../../Styles/Input";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import LoadingFinances from "../LoadingFinances";
 import { sleep } from "../../utils/sleep";
+import Movimentacoes from "../Movimentacoes";
 
 function Investimentos(props) {
   const [investimentos, setInvestimentos] = useState();
@@ -296,13 +297,22 @@ function Investimentos(props) {
             </>
           ) : (
             <>
+              {components === "MOVI" ? (
+                <>
+                  <>
+                    <Movimentacoes investimento={id} close={() => setComponents("EXIB")} />
+                  </>
+                </>
+              ) : (
+                <></>
+              )}
               {components === "EXIB" ? (
                 <>
                   <ReturnSection>
                     <AuxiliarText
                       onClick={() => {
                         setComponents("");
-                        calculateDisponiblePatrimony()
+                        calculateDisponiblePatrimony();
                       }}
                     >
                       Voltar
@@ -403,10 +413,10 @@ function Investimentos(props) {
                         )}
 
                         <Button
-                          // onClick={() => {
-                          //   setComponents("MOVI");
-                          //   setId(investimento.id_investimento);
-                          // }}
+                          onClick={() => {
+                            setComponents("MOVI");
+                            setId(investimento.id_investimento);
+                          }}
                           width="40%"
                           height="50px"
                         >
