@@ -83,3 +83,11 @@ export const InputSection = styled.div`
   padding-top: 4%;
   padding-bottom: 4%;
 `;
+export const CreationTitle = styled.text`
+  color: #5700d5;
+  font-size: 25px;
+  font-family: "Press Start 2P";
+  text-shadow: 0px 0px 4px #1e1e1e;
+  margin-top: 4%;
+  
+`;

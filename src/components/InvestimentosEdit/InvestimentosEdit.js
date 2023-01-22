@@ -11,8 +11,8 @@ function InvestimentosEdit(props) {
     await managerService.updateInvestimentoById(id, { nome: nome });
     window.location.reload();
   }
-  async function deleteInvestimentoById(id) {
-    await managerService.deleteInvestimentoById(id);
+  async function deleteInvestimentoById(investimento) {
+    managerService.deleteInvestimentoById(investimento.id_investimento);
     window.location.reload();
   }
 
@@ -43,7 +43,7 @@ function InvestimentosEdit(props) {
               </Button>
               <Button
                 onClick={() => {
-                  deleteInvestimentoById(investimento.id_investimento);
+                  deleteInvestimentoById(investimento);
                 }}
                 width="30%"
                 height="50px"

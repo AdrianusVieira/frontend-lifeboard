@@ -57,7 +57,7 @@ function InvestimentoCreation(props) {
     ) {
       await managerService.createInvestimento(newInvestimento).then((res) => {
         if (res) {
-          setStatus("SUCESS");
+          setStatus("SUCCESS");
         } else {
           setStatus("ERROR");
         }
@@ -79,7 +79,7 @@ function InvestimentoCreation(props) {
         {loading ? (
           <>
             <>
-              {status === "SUCESS" ? (
+              {status === "SUCCESS" ? (
                 <>
                   <CreationTitle>
                     Investimento Criado com Sucesso!
