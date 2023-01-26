@@ -275,7 +275,7 @@ function Investimentos(props) {
                 </Button>
               </ButtonSection>
               <CreationTitle>
-                Sua alocação disponível: {restValue}
+                Sua alocação disponível: {parseFloat(restValue).toFixed(2)}
               </CreationTitle>
             </>
           ) : (
@@ -300,7 +300,10 @@ function Investimentos(props) {
               {components === "MOVI" ? (
                 <>
                   <>
-                    <Movimentacoes investimento={id} close={() => setComponents("EXIB")} />
+                    <Movimentacoes
+                      investimento={id}
+                      close={() => setComponents("EXIB")}
+                    />
                   </>
                 </>
               ) : (

@@ -15,7 +15,6 @@ import {
   PatrimonySection,
   PatrimonyText,
   PatrimonyCircle,
-  PatrimonyCircleText,
   AuxiliarSection,
   AuxiliarText,
   AuxiliarView,

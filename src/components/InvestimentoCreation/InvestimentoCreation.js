@@ -100,7 +100,7 @@ function InvestimentoCreation(props) {
           </>
         ) : (
           <>
-            <CreationTitle>Sua alocação disponível: {restValue}</CreationTitle>
+            <CreationTitle>Sua alocação disponível: {parseFloat(restValue).toFixed(2)}</CreationTitle>
             <Input
               name="nome"
               width="60%"

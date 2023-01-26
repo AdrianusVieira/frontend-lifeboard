@@ -36,10 +36,10 @@ export const PhotoSection = styled.div`
   align-items: center;
   height: 100%;
 `;
-export const PatrimonySection = styled.div`
+export const LevelSection = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   height: 100%;
 `;
@@ -51,7 +51,7 @@ export const ReturnSection = styled.div`
   height: 100%;
 `;
 
-export const PatrimonyText = styled.text`
+export const LevelText = styled.text`
   color: #fffdf7;
   font-size: 16px;
   font-family: "Press Start 2P";
@@ -70,4 +70,25 @@ export const AuxiliarText = styled.button`
   &:focus {
     color: #00b4d8;
   }
+`;
+export const TarefasSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 1% 1% 1% 1%;
+`;
+export const TarefasView = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 48%;
+  height: 100%;
+  background-color: #5700d5;
+  border-radius: 16px;
+  box-shadow: 0px 0px 4px #1e1e1e, 0px 0px 4px #1e1e1e;
+  padding: 1% 1% 1% 1%;
 `;

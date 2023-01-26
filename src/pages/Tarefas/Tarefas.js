@@ -8,6 +8,10 @@ import {
   ReturnSection,
   PatrimonyText,
   AuxiliarText,
+  LevelSection,
+  LevelText,
+  TarefasSection,
+  TarefasView,
 } from "./Styles";
 import { useHistory } from "react-router-dom";
 import { getEmail } from "../../services/auth";
@@ -15,11 +19,18 @@ import { sleep } from "../../utils/sleep";
 import { UserOutlined, LeftCircleOutlined } from "@ant-design/icons";
 import * as managerService from "../../services/managerService";
 import LoadingFinances from "../../components/LoadingFinances";
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
+import { Badge, Calendar } from "antd";
+
+
 
 function Tarefas() {
+  dayjs.locale("zh-cn");
   const history = useHistory();
   const [usuario, setUsuario] = useState({});
   const [loading, setLoading] = useState(true);
+  const [total_exp, setTotal_exp] = useState("");
 
   async function getUsuario() {
     const email = getEmail();
@@ -36,6 +47,17 @@ function Tarefas() {
   useEffect(() => {
     getUsuario();
   }, []);
+
+  function calculatingTotalExp() {
+    var sum1 = usuario.level * 100;
+    var sum2 = 0.4 * sum1;
+    setTotal_exp(sum1 + sum2);
+  }
+
+  useEffect(() => {
+    calculatingTotalExp();
+  }, [usuario]);
+
 
   return (
     <Body>
@@ -66,17 +88,16 @@ function Tarefas() {
                   </>
                 )}
               </PhotoSection>
-              <PatrimonySection>
-                {usuario.patrimonio_total ? (
-                  <>
-                    <PatrimonyText>R$ {usuario.patrimonio_total}</PatrimonyText>
-                  </>
-                ) : (
-                  <>
-                    <PatrimonyText>Adicione seu Patrimonio</PatrimonyText>
-                  </>
-                )}
-              </PatrimonySection>
+              <LevelSection>
+                <>
+                  <LevelText>Nvl {usuario.level}</LevelText>
+                </>
+                <>
+                  <LevelText>
+                    {usuario.exp_atual} / {total_exp} exp
+                  </LevelText>
+                </>
+              </LevelSection>
               <ReturnSection>
                 <LeftCircleOutlined
                   onClick={() => {
@@ -93,6 +114,11 @@ function Tarefas() {
                 </AuxiliarText>
               </ReturnSection>
             </Box>
+            <TarefasSection>
+              <TarefasView></TarefasView>
+              <TarefasView>
+              </TarefasView>
+            </TarefasSection>
           </Base>
         </>
       )}
