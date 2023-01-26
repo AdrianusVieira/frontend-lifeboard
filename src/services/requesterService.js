@@ -37,3 +37,9 @@ export const getInvestimentosByUsuario = (id) =>
 export const updateInvestimentoById = (id, investimento) =>
   api.put(`/investimento/${id}`, investimento);
 export const deleteInvestimentoById = (id) => api.delete(`/investimento/${id}`);
+//tarefa
+export const createTarefa = (tarefa) => api.post("/tarefa", tarefa);
+export const getTarefasByUsuario = (id) => api.get(`/tarefa/${id}`);
+export const updateTarefaById = (id, tarefa) =>
+  api.put(`/tarefa/${id}`, tarefa);
+export const deleteTarefaById = (id) => api.delete(`/tarefa/${id}`);

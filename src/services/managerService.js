@@ -223,3 +223,43 @@ export const deleteInvestimentoById = async (id) => {
     .catch((error) => console.warn(error));
   return result;
 };
+
+//tarefa
+export const createTarefa = async (tarefa) => {
+  const newTarefa = await requesterService
+    .createTarefa(tarefa)
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => console.warn(error));
+  return newTarefa;
+};
+export const getTarefasByUsuario = async (id) => {
+  const tarefas = await requesterService
+    .getTarefasByUsuario(id)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.warn(error));
+
+  return tarefas;
+};
+export const updateTarefaById = async (id, tarefa) => {
+  const newTarefa = await requesterService
+    .updateTarefaById(id, tarefa)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.warn(error));
+
+  return newTarefa;
+};
+export const deleteTarefaById = async (id) => {
+  const result = await requesterService
+    .deleteTarefaById(id)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.warn(error));
+  return result;
+};
