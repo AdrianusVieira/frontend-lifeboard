@@ -12,6 +12,9 @@ import {
   LevelText,
   TarefasSection,
   TarefasView,
+  CalendarView,
+  TitleText,
+  TarefasList,
 } from "./Styles";
 import { useHistory } from "react-router-dom";
 import { getEmail } from "../../services/auth";
@@ -23,14 +26,13 @@ import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import { Badge, Calendar } from "antd";
 
-
-
 function Tarefas() {
   dayjs.locale("zh-cn");
   const history = useHistory();
   const [usuario, setUsuario] = useState({});
   const [loading, setLoading] = useState(true);
   const [total_exp, setTotal_exp] = useState("");
+  const [targetDate, setTargetDate] = useState("");
 
   async function getUsuario() {
     const email = getEmail();
@@ -58,6 +60,47 @@ function Tarefas() {
     calculatingTotalExp();
   }, [usuario]);
 
+  function setingTargetDate(date) {
+    let aux;
+    if (date) {
+      aux = new Date(date);
+    } else {
+      aux = new Date();
+    }
+    let weekDays = [
+      "Domingo",
+      "Segunda-Feira",
+      "Terça-Feira",
+      "Quarta-Feira",
+      "Quinta-Feira",
+      "Sexta-Feira",
+      "Sabado",
+    ];
+    let months = [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10",
+      "11",
+      "12",
+    ];
+    const obj = {
+      day: weekDays[aux.getDay()],
+      date: aux.getDate(),
+      month: months[aux.getMonth()],
+    };
+    setTargetDate(obj);
+  }
+
+  useEffect(() => {
+    setingTargetDate();
+  }, []);
 
   return (
     <Body>
@@ -115,9 +158,28 @@ function Tarefas() {
               </ReturnSection>
             </Box>
             <TarefasSection>
-              <TarefasView></TarefasView>
               <TarefasView>
+                <TitleText>{targetDate.day}</TitleText>
+                <TitleText>
+                  {targetDate.date}/{targetDate.month}
+                </TitleText>
+                <TarefasList></TarefasList>
+                <AuxiliarText
+                  onClick={() => {
+                    history.push("/home");
+                  }}
+                >
+                  Adicionar Tarefa
+                </AuxiliarText>
               </TarefasView>
+              <CalendarView>
+                <Calendar
+                  fullscreen={false}
+                  onSelect={(e) => {
+                    setingTargetDate(e._d);
+                  }}
+                />
+              </CalendarView>
             </TarefasSection>
           </Base>
         </>

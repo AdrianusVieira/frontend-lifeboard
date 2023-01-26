@@ -75,7 +75,7 @@ export const TarefasSection = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
   height: 100%;
   padding: 1% 1% 1% 1%;
@@ -83,7 +83,7 @@ export const TarefasSection = styled.div`
 export const TarefasView = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
   width: 48%;
   height: 100%;
@@ -91,4 +91,29 @@ export const TarefasView = styled.div`
   border-radius: 16px;
   box-shadow: 0px 0px 4px #1e1e1e, 0px 0px 4px #1e1e1e;
   padding: 1% 1% 1% 1%;
+`;
+export const CalendarView = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 80%;
+  background-color: #5700d5;
+  border-radius: 16px;
+  box-shadow: 0px 0px 4px #1e1e1e, 0px 0px 4px #1e1e1e;
+  padding: 1% 1% 1% 1%;
+`;
+export const TitleText = styled.text`
+  color: #fffdf7;
+  font-size: 20px;
+  font-family: "Press Start 2P";
+  text-shadow: 2px 2px 4px #1e1e1e;
+`;
+export const TarefasList = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 80%;
 `;
