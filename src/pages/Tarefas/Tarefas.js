@@ -25,6 +25,7 @@ import LoadingFinances from "../../components/LoadingFinances";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import { Badge, Calendar } from "antd";
+import TarefaCreation from "../../components/TarefaCreation";
 
 function Tarefas() {
   dayjs.locale("zh-cn");
@@ -33,7 +34,7 @@ function Tarefas() {
   const [loading, setLoading] = useState(true);
   const [total_exp, setTotal_exp] = useState("");
   const [targetDate, setTargetDate] = useState("");
-
+  const [components, setComponents] = useState("");
   async function getUsuario() {
     const email = getEmail();
     const result = await managerService.getUsuarioByEmail(email);
@@ -163,14 +164,26 @@ function Tarefas() {
                 <TitleText>
                   {targetDate.date}/{targetDate.month}
                 </TitleText>
-                <TarefasList></TarefasList>
-                <AuxiliarText
-                  onClick={() => {
-                    history.push("/home");
-                  }}
-                >
-                  Adicionar Tarefa
-                </AuxiliarText>
+                {components === "ADD" ? (
+                  <>
+                    <TarefaCreation usuario={usuario} date={targetDate} close={()=>setComponents("")} />
+                  </>
+                ) : (
+                  <>
+                    <TarefasList></TarefasList>
+                    <AuxiliarText
+                      onClick={() => {
+                        if (components === "ADD") {
+                          setComponents("");
+                        } else {
+                          setComponents("ADD");
+                        }
+                      }}
+                    >
+                      Adicionar Tarefa
+                    </AuxiliarText>
+                  </>
+                )}
               </TarefasView>
               <CalendarView>
                 <Calendar
