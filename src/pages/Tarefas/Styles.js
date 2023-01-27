@@ -113,7 +113,23 @@ export const TitleText = styled.text`
 export const TarefasList = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
   height: 80%;
+  padding-top: 5%;
+  overflow: auto;
+`;
+export const Tarefa = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+`;
+export const TarefaText = styled.text`
+  color: #fffdf7;
+  font-size: 12px;
+  font-family: "Press Start 2P";
+  text-shadow: 2px 2px 4px #1e1e1e;
 `;

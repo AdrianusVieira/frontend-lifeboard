@@ -15,6 +15,8 @@ import {
   CalendarView,
   TitleText,
   TarefasList,
+  Tarefa,
+  TarefaText,
 } from "./Styles";
 import { useHistory } from "react-router-dom";
 import { getEmail } from "../../services/auth";
@@ -26,6 +28,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import { Badge, Calendar } from "antd";
 import TarefaCreation from "../../components/TarefaCreation";
+import { ToolFilled } from "@ant-design/icons";
 
 function Tarefas() {
   dayjs.locale("zh-cn");
@@ -35,6 +38,34 @@ function Tarefas() {
   const [total_exp, setTotal_exp] = useState("");
   const [targetDate, setTargetDate] = useState("");
   const [components, setComponents] = useState("");
+  const [tarefas, setTarefas] = useState("");
+  const [dataAuxiliar, setDataAuxiliar] = useState([]);
+  const [listaTarefas, setListaTarefas] = useState([]);
+ 
+  let weekDays = [
+    "Domingo",
+    "Segunda-Feira",
+    "Terça-Feira",
+    "Quarta-Feira",
+    "Quinta-Feira",
+    "Sexta-Feira",
+    "Sabado",
+  ];
+  let months = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+  ];
+
   async function getUsuario() {
     const email = getEmail();
     const result = await managerService.getUsuarioByEmail(email);
@@ -61,47 +92,50 @@ function Tarefas() {
     calculatingTotalExp();
   }, [usuario]);
 
-  function setingTargetDate(date) {
+  async function setingTargetDate(date) {
+    setListaTarefas([])
     let aux;
     if (date) {
       aux = new Date(date);
     } else {
       aux = new Date();
     }
-    let weekDays = [
-      "Domingo",
-      "Segunda-Feira",
-      "Terça-Feira",
-      "Quarta-Feira",
-      "Quinta-Feira",
-      "Sexta-Feira",
-      "Sabado",
-    ];
-    let months = [
-      "01",
-      "02",
-      "03",
-      "04",
-      "05",
-      "06",
-      "07",
-      "08",
-      "09",
-      "10",
-      "11",
-      "12",
-    ];
     const obj = {
       day: weekDays[aux.getDay()],
       date: aux.getDate(),
       month: months[aux.getMonth()],
     };
     setTargetDate(obj);
+    setDataAuxiliar(aux);
+    setingListaTarefas(aux);
+  }
+
+  async function setingListaTarefas(aux) {
+    let array = []
+    for (let i = 0; i < tarefas.length; i++) {
+      const date = new Date(tarefas[i].data);
+      if (
+        date.getDate() === aux.getDate() &&
+        months[date.getMonth()] === months[aux.getMonth()]
+      ) {
+        array.push(tarefas[i]);
+      }
+    }
+    setListaTarefas(array)
   }
 
   useEffect(() => {
     setingTargetDate();
-  }, []);
+  }, [tarefas]);
+
+  async function getTarefas() {
+    const result = await managerService.getTarefasByUsuario(usuario.id_usuario);
+    setTarefas(result);
+  }
+
+  useEffect(() => {
+    getTarefas();
+  }, [usuario]);
 
   return (
     <Body>
@@ -166,11 +200,55 @@ function Tarefas() {
                 </TitleText>
                 {components === "ADD" ? (
                   <>
-                    <TarefaCreation usuario={usuario} date={targetDate} close={()=>setComponents("")} />
+                    <TarefaCreation
+                      usuario={usuario}
+                      date={dataAuxiliar}
+                      close={() => setComponents("")}
+                    />
                   </>
                 ) : (
                   <>
-                    <TarefasList></TarefasList>
+                    <TarefasList>
+                      {listaTarefas?.map((tarefa) => (
+                        <>
+                          <Tarefa>
+                            {tarefa.urgencia === 0 ? (
+                              <>
+                                <ToolFilled
+                                  style={{
+                                    color: "red",
+                                    fontSize: "20px",
+                                  }}
+                                />
+                              </>
+                            ) : (
+                              <>
+                                {tarefa.urgencia === 1 ? (
+                                  <>
+                                    <ToolFilled
+                                      style={{
+                                        color: "yellow",
+                                        fontSize: "20px",
+                                      }}
+                                    />
+                                  </>
+                                ) : (
+                                  <>
+                                    <ToolFilled
+                                      style={{
+                                        color: "green",
+                                        fontSize: "20px",
+                                      }}
+                                    />
+                                  </>
+                                )}
+                              </>
+                            )}
+                            <TarefaText>{tarefa.descricao}</TarefaText>
+                          </Tarefa>
+                        </>
+                      ))}
+                    </TarefasList>
                     <AuxiliarText
                       onClick={() => {
                         if (components === "ADD") {
@@ -189,6 +267,9 @@ function Tarefas() {
                 <Calendar
                   fullscreen={false}
                   onSelect={(e) => {
+                    setingTargetDate(e._d);
+                  }}
+                  onChange={(e) => {
                     setingTargetDate(e._d);
                   }}
                 />
