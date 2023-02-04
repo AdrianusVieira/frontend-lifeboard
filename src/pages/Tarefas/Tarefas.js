@@ -49,7 +49,7 @@ function Tarefas() {
   const [tarefas, setTarefas] = useState("");
   const [dataAuxiliar, setDataAuxiliar] = useState([]);
   const [listaTarefas, setListaTarefas] = useState([]);
-
+  const hoje = new Date();
   let weekDays = [
     "Domingo",
     "Segunda-Feira",
@@ -73,6 +73,22 @@ function Tarefas() {
     "11",
     "12",
   ];
+
+  async function verificarUltimoFeito() {
+    for (let i = 0; i < tarefas.length; i++) {
+      if (tarefas[i].ultimo_feito !== null || tarefas[i].ultimo_feito !== 0) {
+        if (+tarefas[i].ultimo_feito !== +hoje.getDate()) {
+          await managerService.updateTarefaById(tarefas[i].id_tarefa, {
+            ultimo_feito: 0,
+          });
+        }
+      }
+    }
+  }
+
+  useEffect(() => {
+    verificarUltimoFeito();
+  }, [tarefas]);
 
   async function getUsuario() {
     const email = getEmail();
@@ -124,9 +140,11 @@ function Tarefas() {
     for (let i = 0; i < tarefas.length; i++) {
       const date = new Date(tarefas[i].data);
       let recorrencia = tarefas[i].recorrencia;
+      let ultimo_feito = tarefas[i].ultimo_feito;
       if (
         date.getDate() === aux.getDate() &&
-        months[date.getMonth()] === months[aux.getMonth()]
+        months[date.getMonth()] === months[aux.getMonth()] &&
+        ultimo_feito !== aux.getDate()
       ) {
         array.push(tarefas[i]);
       } else {
@@ -135,7 +153,8 @@ function Tarefas() {
             if (
               JSON.stringify(aux.getDay()) === recorrencia[prop] &&
               aux.getDate() >= date.getDate() &&
-              months[aux.getMonth()] >= months[date.getMonth()]
+              months[aux.getMonth()] >= months[date.getMonth()] &&
+              ultimo_feito !== aux.getDate()
             ) {
               array.push(tarefas[i]);
             }
@@ -158,6 +177,55 @@ function Tarefas() {
   useEffect(() => {
     getTarefas();
   }, [usuario]);
+
+  async function aumentarExperiencia(tarefa) {
+    let tabela_exp = [100, 80, 50];
+    let exp = tabela_exp[+tarefa.urgencia];
+    let new_total_exp = usuario.exp_atual + exp;
+    if (new_total_exp >= +total_exp) {
+      let new_level = usuario.level + 1;
+      new_total_exp = +new_total_exp - +total_exp;
+      await managerService.updateUsuarioByEmail(usuario.email, {
+        level: new_level,
+        exp_atual: new_total_exp,
+      });
+      getUsuario();
+      setTotal_exp();
+    } else {
+      await managerService.updateUsuarioByEmail(usuario.email, {
+        exp_atual: new_total_exp,
+      });
+      getUsuario();
+    }
+  }
+  async function verificarRecorrencia(recorrencia) {
+    let dias = ["0", "1", "2", "3", "4", "5", "6"];
+    let has_recorrencia = false
+    for (const prop in recorrencia) {
+      if (dias.includes(recorrencia[prop])) {
+        has_recorrencia = true;
+      }
+    }
+    return has_recorrencia;
+  }
+
+  async function concludeTarefa(tarefa) {
+    await aumentarExperiencia(tarefa);
+    const has_recorrencia = await verificarRecorrencia(tarefa.recorrencia);
+    if (has_recorrencia === true) {
+      await managerService.updateTarefaById(tarefa.id_tarefa, {
+        ultimo_feito: dataAuxiliar.getDate(),
+      });
+    } else {
+      await managerService.deleteTarefaById(tarefa.id_tarefa);
+    }
+    getTarefas();
+  }
+
+  async function deleteTarefa(id) {
+    await managerService.deleteTarefaById(id);
+     getTarefas();
+  }
 
   return (
     <Body>
@@ -286,22 +354,31 @@ function Tarefas() {
                                     borderColor: "#745296",
                                   },
                                 }}
-                              />
-                              <CheckCircleOutlined
-                                style={{
-                                  color: "#e0c3f7",
-                                  fontSize: "25px",
-                                  borderStyle: "solid",
-                                  borderColor: "#5700D5",
-                                  borderRadius: "50%",
-                                  focus: {
-                                    borderColor: "#745296",
-                                  },
+                                onClick={() => {
+                                  deleteTarefa(tarefa.id_tarefa);
                                 }}
-                                // onClick={() => {
-                                //   setMovimentacao(investimento);
-                                // }}
                               />
+                              {dataAuxiliar.getDate() === hoje.getDate() ? (
+                                <>
+                                  <CheckCircleOutlined
+                                    style={{
+                                      color: "#e0c3f7",
+                                      fontSize: "25px",
+                                      borderStyle: "solid",
+                                      borderColor: "#5700D5",
+                                      borderRadius: "50%",
+                                      focus: {
+                                        borderColor: "#745296",
+                                      },
+                                    }}
+                                    onClick={() => {
+                                      concludeTarefa(tarefa);
+                                    }}
+                                  />
+                                </>
+                              ) : (
+                                <></>
+                              )}
                             </ButtonSection>
                           </Tarefa>
                         </>
