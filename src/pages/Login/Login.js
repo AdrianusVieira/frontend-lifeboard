@@ -34,6 +34,7 @@ function Login() {
             width="70%"
             marginTop="30px"
             placeholder="Insira seu email jogador:"
+            type="email"
             onChange={(e) => {
               setEmail(e.target.value);
             }}

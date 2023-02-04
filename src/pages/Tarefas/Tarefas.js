@@ -17,11 +17,19 @@ import {
   TarefasList,
   Tarefa,
   TarefaText,
+  ToolSection,
+  TextSection,
+  ButtonSection,
 } from "./Styles";
 import { useHistory } from "react-router-dom";
 import { getEmail } from "../../services/auth";
 import { sleep } from "../../utils/sleep";
-import { UserOutlined, LeftCircleOutlined } from "@ant-design/icons";
+import {
+  UserOutlined,
+  LeftCircleOutlined,
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+} from "@ant-design/icons";
 import * as managerService from "../../services/managerService";
 import LoadingFinances from "../../components/LoadingFinances";
 import dayjs from "dayjs";
@@ -41,7 +49,7 @@ function Tarefas() {
   const [tarefas, setTarefas] = useState("");
   const [dataAuxiliar, setDataAuxiliar] = useState([]);
   const [listaTarefas, setListaTarefas] = useState([]);
- 
+
   let weekDays = [
     "Domingo",
     "Segunda-Feira",
@@ -93,7 +101,7 @@ function Tarefas() {
   }, [usuario]);
 
   async function setingTargetDate(date) {
-    setListaTarefas([])
+    setListaTarefas([]);
     let aux;
     if (date) {
       aux = new Date(date);
@@ -111,17 +119,18 @@ function Tarefas() {
   }
 
   async function setingListaTarefas(aux) {
-    let array = []
+    let array = [];
     for (let i = 0; i < tarefas.length; i++) {
       const date = new Date(tarefas[i].data);
       if (
-        date.getDate() === aux.getDate() &&
-        months[date.getMonth()] === months[aux.getMonth()]
+        (date.getDate() === aux.getDate() &&
+          months[date.getMonth()] === months[aux.getMonth()]) ||
+        weekDays[date.getDay()] === weekDays[aux.getDay()]
       ) {
         array.push(tarefas[i]);
       }
     }
-    setListaTarefas(array)
+    setListaTarefas(array);
   }
 
   useEffect(() => {
@@ -203,7 +212,10 @@ function Tarefas() {
                     <TarefaCreation
                       usuario={usuario}
                       date={dataAuxiliar}
-                      close={() => setComponents("")}
+                      close={() => {
+                        setComponents("");
+                        getTarefas();
+                      }}
                     />
                   </>
                 ) : (
@@ -212,39 +224,72 @@ function Tarefas() {
                       {listaTarefas?.map((tarefa) => (
                         <>
                           <Tarefa>
-                            {tarefa.urgencia === 0 ? (
-                              <>
-                                <ToolFilled
-                                  style={{
-                                    color: "red",
-                                    fontSize: "20px",
-                                  }}
-                                />
-                              </>
-                            ) : (
-                              <>
-                                {tarefa.urgencia === 1 ? (
-                                  <>
-                                    <ToolFilled
-                                      style={{
-                                        color: "yellow",
-                                        fontSize: "20px",
-                                      }}
-                                    />
-                                  </>
-                                ) : (
-                                  <>
-                                    <ToolFilled
-                                      style={{
-                                        color: "green",
-                                        fontSize: "20px",
-                                      }}
-                                    />
-                                  </>
-                                )}
-                              </>
-                            )}
-                            <TarefaText>{tarefa.descricao}</TarefaText>
+                            <ToolSection>
+                              {tarefa.urgencia === 0 ? (
+                                <>
+                                  <ToolFilled
+                                    style={{
+                                      color: "red",
+                                      fontSize: "20px",
+                                    }}
+                                  />
+                                </>
+                              ) : (
+                                <>
+                                  {tarefa.urgencia === 1 ? (
+                                    <>
+                                      <ToolFilled
+                                        style={{
+                                          color: "yellow",
+                                          fontSize: "20px",
+                                        }}
+                                      />
+                                    </>
+                                  ) : (
+                                    <>
+                                      <ToolFilled
+                                        style={{
+                                          color: "green",
+                                          fontSize: "20px",
+                                        }}
+                                      />
+                                    </>
+                                  )}
+                                </>
+                              )}
+                            </ToolSection>
+                            <TextSection>
+                              <TarefaText>{tarefa.descricao}</TarefaText>
+                            </TextSection>
+                            <ButtonSection>
+                              <CloseCircleOutlined
+                                style={{
+                                  color: "#e0c3f7",
+                                  fontSize: "25px",
+                                  borderStyle: "solid",
+                                  borderColor: "#5700D5",
+                                  borderRadius: "50%",
+                                  focus: {
+                                    borderColor: "#745296",
+                                  },
+                                }}
+                              />
+                              <CheckCircleOutlined
+                                style={{
+                                  color: "#e0c3f7",
+                                  fontSize: "25px",
+                                  borderStyle: "solid",
+                                  borderColor: "#5700D5",
+                                  borderRadius: "50%",
+                                  focus: {
+                                    borderColor: "#745296",
+                                  },
+                                }}
+                                // onClick={() => {
+                                //   setMovimentacao(investimento);
+                                // }}
+                              />
+                            </ButtonSection>
                           </Tarefa>
                         </>
                       ))}

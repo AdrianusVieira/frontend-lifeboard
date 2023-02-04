@@ -116,13 +116,14 @@ export const TarefasList = styled.div`
   justify-content: flex-start;
   align-items: center;
   height: 80%;
+  width: 100%;
   padding-top: 5%;
   overflow: auto;
 `;
 export const Tarefa = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   width: 100%;
   margin-bottom: 20px;
@@ -132,4 +133,25 @@ export const TarefaText = styled.text`
   font-size: 12px;
   font-family: "Press Start 2P";
   text-shadow: 2px 2px 4px #1e1e1e;
+`;
+export const ButtonSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 20%;
+  align-items: center;
+`;
+export const TextSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 70%;
+  align-items: center;
+`;
+export const ToolSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 10%;
+  align-items: center;
 `;
