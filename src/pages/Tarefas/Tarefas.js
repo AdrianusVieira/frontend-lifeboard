@@ -120,13 +120,27 @@ function Tarefas() {
 
   async function setingListaTarefas(aux) {
     let array = [];
+    let dias = ["0", "1", "2", "3", "4", "5", "6"];
     for (let i = 0; i < tarefas.length; i++) {
       const date = new Date(tarefas[i].data);
+      let recorrencia = tarefas[i].recorrencia;
       if (
-        (date.getDate() === aux.getDate() &&
-          months[date.getMonth()] === months[aux.getMonth()])
+        date.getDate() === aux.getDate() &&
+        months[date.getMonth()] === months[aux.getMonth()]
       ) {
         array.push(tarefas[i]);
+      } else {
+        for (const prop in recorrencia) {
+          if (dias.includes(recorrencia[prop])) {
+            if (
+              JSON.stringify(aux.getDay()) === recorrencia[prop] &&
+              aux.getDate() >= date.getDate() &&
+              months[aux.getMonth()] >= months[date.getMonth()]
+            ) {
+              array.push(tarefas[i]);
+            }
+          }
+        }
       }
     }
     setListaTarefas(array);
@@ -311,9 +325,6 @@ function Tarefas() {
                 <Calendar
                   fullscreen={false}
                   onSelect={(e) => {
-                    setingTargetDate(e._d);
-                  }}
-                  onChange={(e) => {
                     setingTargetDate(e._d);
                   }}
                 />

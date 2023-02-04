@@ -33,9 +33,9 @@ function TarefaCreation(props) {
     setLoading(true);
     newTarefa.id_usuario = props.usuario.id_usuario;
     newTarefa.urgencia = urgencia;
-    const aux = new Date(props.date)
+    const aux = new Date(props.date);
     aux.setHours(aux.getHours() - 3);
-    newTarefa.data = aux
+    newTarefa.data = aux;
     newTarefa.recorrencia = {recorrencia};
     if (
       newTarefa.descricao !== "" &&
