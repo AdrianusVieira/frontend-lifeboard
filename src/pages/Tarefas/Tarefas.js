@@ -124,8 +124,7 @@ function Tarefas() {
       const date = new Date(tarefas[i].data);
       if (
         (date.getDate() === aux.getDate() &&
-          months[date.getMonth()] === months[aux.getMonth()]) ||
-        weekDays[date.getDay()] === weekDays[aux.getDay()]
+          months[date.getMonth()] === months[aux.getMonth()])
       ) {
         array.push(tarefas[i]);
       }
@@ -225,7 +224,7 @@ function Tarefas() {
                         <>
                           <Tarefa>
                             <ToolSection>
-                              {tarefa.urgencia === 0 ? (
+                              {+tarefa.urgencia === 0 ? (
                                 <>
                                   <ToolFilled
                                     style={{
@@ -236,7 +235,7 @@ function Tarefas() {
                                 </>
                               ) : (
                                 <>
-                                  {tarefa.urgencia === 1 ? (
+                                  {+tarefa.urgencia === 1 ? (
                                     <>
                                       <ToolFilled
                                         style={{
