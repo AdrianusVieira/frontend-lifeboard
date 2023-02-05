@@ -59,3 +59,8 @@
   font-size: 14px !important;
   font-family: "VT323" !important;
 }
+.ant-timeline-item-content{
+  color: #5700d5 !important;
+  font-size: 20px !important;
+  font-family: "VT323" !important;
+}

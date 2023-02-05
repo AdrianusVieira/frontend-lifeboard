@@ -1,56 +1,84 @@
 import React, { useState, useEffect } from "react";
-import { Body, RelatorioView } from "./Styles";
+import { Body, InitialTitle, RelatorioView } from "./Styles";
 import * as managerService from "../../services/managerService";
 import { Timeline } from "antd";
 
 function Relatorios(props) {
   const [relatorios, setRelatorios] = useState();
+  const [relatoriosMultiplos, setRelatoriosMultiplos] = useState();
+  const [categoria, setCategoria] = useState();
+  const [tipo, setTipo] = useState();
+
   async function getRelatorios() {
     let res;
     let categoria;
-    let tipo
+    let tipo;
     if (props.carteira) {
       res = await managerService.getRelatorios("carteira");
       categoria = await managerService.getCarteirasByUsuario(
         props.usuario.id_usuario
       );
-      tipo='carteira'
+      tipo = "carteira";
     } else if (props.fundo) {
       res = await managerService.getRelatorios("fundo");
       categoria = await managerService.getFundosByUsuario(
         props.usuario.id_usuario
       );
-      tipo='fundo'
+      tipo = "fundo";
     } else if (props.investimento) {
       res = await managerService.getRelatorios("investimento");
       categoria = await managerService.getInvestimentosByUsuario(
         props.usuario.id_usuario
       );
-      tipo='investimento'
+      tipo = "investimento";
     }
-    separatingRelatorios(res, categoria,tipo);
+    setCategoria(categoria);
+    setTipo(tipo);
+    setRelatorios(res);
   }
   useEffect(() => {
     getRelatorios();
   }, [props]);
 
-  async function separatingRelatorios(relatorios, categoria,tipo) {
-    let aux = [];
-    for (var i = 0; i < categoria.length; i++) {
-      const array = relatorios.filter(
-        (relatorio) => relatorio[`id_${tipo}`] === categoria[[`id_${tipo}`]]
-      );
-      aux.push(array)
-    }
-    console.log(
-      "🚀 ~ file: Relatorios.js:47 ~ separatingRelatorios ~ aux",
-      aux
-    );
-    setRelatorios(aux)
-  }
-    
-
-  return <Body></Body>;
+  return (
+    <Body>
+      {categoria?.map((categoria) => (
+        <RelatorioView>
+          <InitialTitle>{categoria.nome}</InitialTitle>
+          <Timeline>
+            {relatorios
+              ?.filter(
+                (relatorio) =>
+                  relatorio[`id_${tipo}`] === categoria[`id_${tipo}`]
+              )
+              .map((relatorio) => (
+                <Timeline.Item>
+                  {new Date(relatorio.data_hora).getDate() < 10 ? (
+                    <>0{new Date(relatorio.data_hora).getDate()}</>
+                  ) : (
+                    <>{new Date(relatorio.data_hora).getDate()}</>
+                  )}
+                  /
+                  {new Date(relatorio.data_hora).getMonth() < 10 ? (
+                    <>0{new Date(relatorio.data_hora).getMonth()}</>
+                  ) : (
+                    <>{new Date(relatorio.data_hora).getMonth()}</>
+                  )}
+                  /{new Date(relatorio.data_hora).getFullYear()} - R$
+                  {relatorio.valor.toFixed(2)}
+                </Timeline.Item>
+              ))}
+          </Timeline>
+        </RelatorioView>
+      ))}
+      {relatorios?.map((relatorio) => (
+        <></>
+      ))}
+      {relatoriosMultiplos?.map((relatorio) => (
+        <></>
+      ))}
+    </Body>
+  );
 }
 
 export default Relatorios;
