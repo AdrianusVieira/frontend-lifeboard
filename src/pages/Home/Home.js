@@ -38,6 +38,7 @@ function Home() {
   const [percent, setPercent] = useState(0);
   const [loading, setLoading] = useState(true);
   const [state, setState] = useState("");
+  const hoje = new Date();
 
   async function getUsuario() {
     const email = getEmail();
@@ -73,6 +74,58 @@ function Home() {
   useEffect(() => {
     calculatingBarPercent();
   }, [total_exp]);
+
+  async function generateRelatorios() {
+    const carteiras = await managerService.getCarteirasByUsuario(
+      usuario.id_usuario
+    );
+    const fundos = await managerService.getFundosByUsuario(usuario.id_usuario);
+    const investimentos = await managerService.getInvestimentosByUsuario(
+      usuario.id_usuario
+    );
+    const verificado = await verificarRelatorios(fundos[0].id_fundo);
+    if (verificado === false) {
+      for (let i = 0; i < carteiras.length; i++) {
+        await managerService.createRelatorio({
+          data_hora: hoje,
+          valor: carteiras[i].patrimonio,
+          id_carteira: carteiras[i].id_carteira,
+        });
+      }
+      for (let i = 0; i < fundos.length; i++) {
+        await managerService.createRelatorio({
+          data_hora: hoje,
+          valor: fundos[i].patrimonio,
+          id_fundo: fundos[i].id_fundo,
+        });
+      }
+      for (let i = 0; i < investimentos.length; i++) {
+        await managerService.createRelatorio({
+          data_hora: hoje,
+          valor: investimentos[i].patrimonio,
+          id_investimento: investimentos[i].id_investimento,
+        });
+      }
+    }
+  }
+  async function verificarRelatorios(id) {
+    let verificado = false;
+    const relatorios = await managerService.getRelatorios("fundo");
+    const aux = relatorios.filter((relatorio) => relatorio.id_fundo === id);
+    aux.forEach((relatorio) => {
+      const date = new Date(relatorio.data_hora);
+      if (date.getDate() === hoje.getDate()) {
+        verificado = true;
+      }
+    });
+    return verificado;
+  }
+
+  useEffect(() => {
+    if (hoje.getDate() === 1 || hoje.getDate() === 15) {
+      generateRelatorios();
+    }
+  }, [usuario]);
 
   return (
     <Body>
