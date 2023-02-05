@@ -9,17 +9,20 @@ import {
   InitialTitle,
   InputSection,
   CreationTitle,
+  UpperSection,
+  TitleSection,
 } from "./Styles";
 import Button from "../../Styles/Button";
 import * as managerService from "../../services/managerService";
 import InvestimentoCreation from "../InvestimentoCreation";
 import InvestimentosEdit from "../InvestimentosEdit";
-import { Select } from "antd";
+import { Select, Statistic } from "antd";
 import "./Styles.css";
 import Input from "../../Styles/Input";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import LoadingFinances from "../LoadingFinances";
 import { sleep } from "../../utils/sleep";
+import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 import Movimentacoes from "../Movimentacoes";
 
 function Investimentos(props) {
@@ -27,6 +30,7 @@ function Investimentos(props) {
   const [investimentosEspecif, setInvestimentosEspecif] = useState();
   const [status, setStatus] = useState();
   const [components, setComponents] = useState("");
+  const [investimentoStatus, setInvestimentoStatus] = useState([]);
   const [newMovimentacao, setNewMovimentacao] = useState({
     tipo: "Selecione o tipo:",
     data_hora: "",
@@ -84,6 +88,20 @@ function Investimentos(props) {
     const result = await managerService.getInvestimentosByCategoria(categoria);
     setInvestimentosEspecif(result);
   }
+
+  async function calculateInvestimentoStatus() {
+    let aux = [];
+    investimentosEspecif.forEach((investimento) => {
+      let diferença = investimento.patrimonio - investimento.valor_referencia;
+      let status = (diferença * 100) / investimento.valor_referencia;
+      aux.push(status);
+    });
+    setInvestimentoStatus(aux);
+  }
+  useEffect(() => {
+    calculateInvestimentoStatus();
+  }, [investimentosEspecif]);
+
   async function calculateDisponiblePatrimony() {
     const aux = await managerService.getInvestimentosByUsuario(
       props.usuario.id_usuario
@@ -144,6 +162,7 @@ function Investimentos(props) {
     await managerService.createMovimentacao(movimentacao);
     let newPatrimonioFundo;
     let newPatrimonioInvestimento;
+    let newValorReferencia = investimento.valor_referencia;
     if (movimentacao.tipo === "INCREASE") {
       newPatrimonioFundo = +fundoInvestimento.patrimonio + +movimentacao.valor;
       newPatrimonioInvestimento =
@@ -156,6 +175,7 @@ function Investimentos(props) {
       newPatrimonioFundo = +fundoInvestimento.patrimonio + +movimentacao.valor;
       newPatrimonioInvestimento = +investimento.patrimonio;
     } else if (movimentacao.tipo === "CONTRIBUITION") {
+      newValorReferencia = +newValorReferencia + +movimentacao.valor;
       newPatrimonioFundo = +fundoInvestimento.patrimonio;
       newPatrimonioInvestimento =
         +investimento.patrimonio + +movimentacao.valor;
@@ -180,9 +200,11 @@ function Investimentos(props) {
         investimento.id_investimento,
         {
           patrimonio: newPatrimonioInvestimento,
+          valor_referencia: newValorReferencia,
         }
       );
       investimento.patrimonio = newPatrimonioInvestimento;
+      investimento.valor_referencia = newValorReferencia;
     }
     await calculatePatrimony();
     await calculateDisponiblePatrimony();
@@ -193,6 +215,7 @@ function Investimentos(props) {
       valor: "",
       id_investimento: "",
     });
+    calculateInvestimentoStatus();
     await sleep(1500);
     setLoading(false);
   }
@@ -324,10 +347,47 @@ function Investimentos(props) {
                   {investimentosEspecif?.map((investimento) => (
                     <>
                       <InvestimentoView>
-                        <InitialTitle>{investimento.nome}</InitialTitle>
-                        <InitialTitle>
-                          R$ {investimento.patrimonio.toFixed(2)}
-                        </InitialTitle>
+                        <UpperSection>
+                          <TitleSection>
+                            <InitialTitle>{investimento.nome}</InitialTitle>
+                            <InitialTitle>
+                              R$ {investimento.patrimonio.toFixed(2)}
+                            </InitialTitle>
+                          </TitleSection>
+                          <TitleSection>
+                            {investimentoStatus[
+                              investimentosEspecif.indexOf(investimento)
+                            ] >= 0 ? (
+                              <>
+                                <Statistic
+                                  value={
+                                    investimentoStatus[
+                                      investimentosEspecif.indexOf(investimento)
+                                    ]
+                                  }
+                                  precision={2}
+                                  valueStyle={{ color: "#3f8600" }}
+                                  prefix={<ArrowUpOutlined />}
+                                  suffix="%"
+                                />
+                              </>
+                            ) : (
+                              <>
+                                <Statistic
+                                  value={
+                                    investimentoStatus[
+                                      investimentosEspecif.indexOf(investimento)
+                                    ]
+                                  }
+                                  precision={2}
+                                  valueStyle={{ color: "#cf1322" }}
+                                  prefix={<ArrowDownOutlined />}
+                                  suffix="%"
+                                />
+                              </>
+                            )}
+                          </TitleSection>
+                        </UpperSection>
                         {loading ? (
                           <>
                             <>

@@ -91,3 +91,16 @@ export const CreationTitle = styled.text`
   margin-top: 4%;
   
 `;
+export const TitleSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+`;
+export const UpperSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 50%;
+`;

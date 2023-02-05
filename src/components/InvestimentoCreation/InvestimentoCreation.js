@@ -50,6 +50,7 @@ function InvestimentoCreation(props) {
     setLoading(true);
     newInvestimento.id_usuario = props.usuario.id_usuario;
     newInvestimento.categoria = categoria;
+    newInvestimento.valor_referencia = newInvestimento.patrimonio;
     if (
       newInvestimento.nome !== "" &&
       newInvestimento.categoria !== "Categoria:" &&
@@ -100,7 +101,9 @@ function InvestimentoCreation(props) {
           </>
         ) : (
           <>
-            <CreationTitle>Sua alocação disponível: {parseFloat(restValue).toFixed(2)}</CreationTitle>
+            <CreationTitle>
+              Sua alocação disponível: {parseFloat(restValue).toFixed(2)}
+            </CreationTitle>
             <Input
               name="nome"
               width="60%"
