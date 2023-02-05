@@ -16,6 +16,7 @@ import { sleep } from "../../utils/sleep";
 import LoadingFinances from "../LoadingFinances";
 import CarteirasEdit from "../CarteirasEdit";
 import Movimentacoes from "../Movimentacoes/Movimentacoes";
+import Relatorios from "../Relatorios/Relatorios";
 
 function Carteiras(props) {
   const [carteiras, setCarteiras] = useState();
@@ -144,9 +145,13 @@ function Carteiras(props) {
               Editar Carteiras
             </Button>
             <Button
-              // onClick={() => {
-              //   setComponents("FUNDOS");
-              // }}
+              onClick={() => {
+                if (components === "REPORTS") {
+                  setComponents("");
+                } else {
+                  setComponents("REPORTS");
+                }
+              }}
               width="30%"
               height="60px"
             >
@@ -167,7 +172,9 @@ function Carteiras(props) {
       ) : (
         <>
           {components === "REPORTS" ? (
-            <></>
+            <>
+              <Relatorios carteira="carteira" usuario={props.usuario} />
+            </>
           ) : (
             <>
               {components === "EDIT" ? (

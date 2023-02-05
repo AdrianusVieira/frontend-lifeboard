@@ -24,6 +24,7 @@ import LoadingFinances from "../LoadingFinances";
 import { sleep } from "../../utils/sleep";
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 import Movimentacoes from "../Movimentacoes";
+import Relatorios from "../Relatorios/Relatorios";
 
 function Investimentos(props) {
   const [investimentos, setInvestimentos] = useState();
@@ -254,9 +255,13 @@ function Investimentos(props) {
               Editar
             </Button>
             <Button
-              // onClick={() => {
-              //   setComponents("FUNDOS");
-              // }}
+              onClick={() => {
+                if (components === "REPORTS") {
+                  setComponents("");
+                } else {
+                  setComponents("REPORTS");
+                }
+              }}
               width="30%"
               height="60px"
             >
@@ -330,7 +335,20 @@ function Investimentos(props) {
                   </>
                 </>
               ) : (
-                <></>
+                <>
+                  {components === "REPORTS" ? (
+                    <>
+                      <>
+                        <Relatorios
+                          investimento="investimento"
+                          usuario={props.usuario}
+                        />
+                      </>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </>
               )}
               {components === "EXIB" ? (
                 <>

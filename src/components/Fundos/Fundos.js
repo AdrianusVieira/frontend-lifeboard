@@ -16,6 +16,7 @@ import LoadingFinances from "../LoadingFinances";
 import * as managerService from "../../services/managerService";
 import FundosEdit from "../FundosEdit";
 import Movimentacoes from "../Movimentacoes/Movimentacoes";
+import Relatorios from "../Relatorios/Relatorios";
 
 function Fundos(props) {
   const [fundos, setFundos] = useState();
@@ -144,9 +145,13 @@ function Fundos(props) {
               Editar Fundos
             </Button>
             <Button
-              // onClick={() => {
-              //   setComponents("FUNDOS");
-              // }}
+              onClick={() => {
+                if (components === "REPORTS") {
+                  setComponents("");
+                } else {
+                  setComponents("REPORTS");
+                }
+              }}
               width="30%"
               height="60px"
             >
@@ -168,7 +173,11 @@ function Fundos(props) {
       ) : (
         <>
           {components === "REPORTS" ? (
-            <></>
+            <>
+              <>
+                <Relatorios fundo="fundo" usuario={props.usuario} />
+              </>
+            </>
           ) : (
             <>
               {components === "EDIT" ? (
