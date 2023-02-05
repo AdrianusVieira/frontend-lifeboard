@@ -6,7 +6,11 @@ import * as managerService from "../../services/managerService";
 
 function Relatorios(props) {
   const [relatorios, setRelatorios] = useState();
-  
+  async function getRelatorios(){
+    if(props.id_carteira){
+    
+    }
+  }
 
   return (
     <Body>

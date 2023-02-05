@@ -263,3 +263,24 @@ export const deleteTarefaById = async (id) => {
     .catch((error) => console.warn(error));
   return result;
 };
+
+//relatorio
+export const createRelatorio = async (relatorio) => {
+  const newRelatorio = await requesterService
+    .createRelatorio(relatorio)
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => console.warn(error));
+  return newRelatorio;
+};
+export const getRelatorios = async (tipo) => {
+  const relatorios = await requesterService
+    .index(tipo)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => console.warn(error));
+
+  return relatorios;
+};

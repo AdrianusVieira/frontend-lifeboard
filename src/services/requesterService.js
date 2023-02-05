@@ -1,3 +1,4 @@
+import Relatorios from "../components/Relatorios/Relatorios";
 import api from "./api";
 
 //usuario
@@ -43,3 +44,7 @@ export const getTarefasByUsuario = (id) => api.get(`/tarefa/${id}`);
 export const updateTarefaById = (id, tarefa) =>
   api.put(`/tarefa/${id}`, tarefa);
 export const deleteTarefaById = (id) => api.delete(`/tarefa/${id}`);
+
+//relatorio 
+export const createRelatorio = (relatorio)=> api.post (`/relatorio`, relatorio);
+export const index = (tipo)=>api.get(`/relatorio/${tipo}`)
