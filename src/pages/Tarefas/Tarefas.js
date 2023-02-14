@@ -152,8 +152,7 @@ function Tarefas() {
           if (dias.includes(recorrencia[prop])) {
             if (
               JSON.stringify(aux.getDay()) === recorrencia[prop] &&
-              aux.getDate() >= date.getDate() &&
-              months[aux.getMonth()] >= months[date.getMonth()] &&
+              aux >= date &&
               ultimo_feito !== aux.getDate()
             ) {
               array.push(tarefas[i]);
